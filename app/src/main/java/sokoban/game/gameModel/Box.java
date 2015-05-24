@@ -27,5 +27,4 @@ public class Box extends Movable implements IMovable {
 			from.attach(oldMovable);
 		}
 	}
-
 }

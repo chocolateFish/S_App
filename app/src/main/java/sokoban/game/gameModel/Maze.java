@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import sokoban.Directions;
 import sokoban.game.BlockTypes;
+import sokoban.game.HasMovedCallback;
 
 public class Maze implements IMaze {
+    //TODO
+    HasMovedCallback hasMovedCallback;
 	List<IPosition> allPositions;
 	private int height;
 	private int width;
@@ -18,7 +21,8 @@ public class Maze implements IMaze {
 	}
 
 	// constructor is public so it can be accessed by tests.
-	public Maze(String mazeStr) {
+	public Maze(String mazeStr, HasMovedCallback callback) {
+        this.hasMovedCallback = callback;
 		this.setHeightWidthFromStr(mazeStr);
 		this.allPositions = new ArrayList<IPosition>();
 		this.addAllPositions(mazeStr);

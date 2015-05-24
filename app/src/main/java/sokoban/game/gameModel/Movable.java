@@ -19,6 +19,7 @@ public abstract class Movable implements IMovable{
 	}
 
 	public abstract void move(Directions direction);
+
 	//unnecessary
 	//public IPosition getPostion() {
 		//return this.currentPosition;

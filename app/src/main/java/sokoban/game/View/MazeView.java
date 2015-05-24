@@ -149,12 +149,12 @@ public class MazeView extends View {
             for (int acrossNum = 0; acrossNum < this.across; acrossNum++) {
                 BlockTypes theBlock = this.callback.getBlockType(acrossNum, downNum);
                 this.drawBlock(canvas, left, top, theBlock);
-                left = left + this.blockLength;;
+                left = left + this.blockLength;
             }
             top = top + this.blockLength;
         }
     }
-    //TODO fix bug - Man on a Target draws as a box on a floor. (even when its not near a box at all)
+
     private void drawBlock(Canvas canvas, int left, int top, BlockTypes theBlock){
         switch(theBlock){
             case FlOOR:
@@ -178,6 +178,7 @@ public class MazeView extends View {
                 this.drawBlockBackground(canvas, left, top, Color.LTGRAY);
                 this.drawTarget(canvas, left, top);
                 this.drawMan(canvas, left, top, Color.GREEN);
+                break;
             case FLOORBOX:
                 this.drawBlockBackground(canvas, left, top, Color.LTGRAY);
                 this.drawFloor(canvas, left, top);
@@ -220,11 +221,11 @@ public class MazeView extends View {
     private void drawFloor(Canvas canvas, int left, int top){
         fillPaint.setColor(Color.GRAY);
         //TODO calculate margin as percentage
-        int margin = 10;
+        int margin = 20;
         float radius = (this.blockLength/2) - margin;
-        float circlex = left + margin + radius;
+        float circleX = left + margin + radius;
         float circleY = top + margin + radius;
-        canvas.drawCircle(circlex, circleY, radius, fillPaint);
+        canvas.drawCircle(circleX, circleY, radius, fillPaint);
     }
 
     //draw triangle
@@ -260,9 +261,9 @@ public class MazeView extends View {
         //TODO - calculate margin as percentage
         int margin = 10;
         float radius = (this.blockLength/2) - margin;
-        float circlex = left + margin + radius;
+        float circleX = left + margin + radius;
         float circleY = top + margin + radius;
-        canvas.drawCircle(circlex, circleY, radius, fillPaint);
+        canvas.drawCircle(circleX, circleY, radius, fillPaint);
     }
 
     private void drawBox(Canvas canvas, int left, int top, int aColor){
