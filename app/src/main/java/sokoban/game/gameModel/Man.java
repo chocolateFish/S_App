@@ -33,7 +33,6 @@ public class Man extends Movable implements IMovable {
 				this.move(direction);
 			}
 		}
-
 	}
 
 }

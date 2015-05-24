@@ -8,7 +8,6 @@ import sokoban.game.BlockTypes;
 
 public class Maze implements IMaze {
 	List<IPosition> allPositions;
-	@SuppressWarnings("unused")
 	private int height;
 	private int width;
 	private IMovable man;
@@ -119,8 +118,7 @@ public class Maze implements IMaze {
 
 	public IPosition find(int across, int down) {
 		int index = across + (this.width * down);
-		IPosition found = this.allPositions.get(index);
-		return found;
+		return this.allPositions.get(index);
 	}
 
 	private void addMan(IPosition pos) {
@@ -160,21 +158,20 @@ public class Maze implements IMaze {
 	}
 
 	public void playTurn(Directions direction) {
-
 		this.man.move(direction);
 	}
+
 	public int getHeight() {
 		return this.height;
 	}
 
 	public int getWidth(){
-
 		return this.width;
 	}
 
 	public BlockTypes whoIsAt(int across, int down){
 		IPosition thePos = this.find(across, down);
-		return thePos.getBlocks();
+		return thePos.getBlock();
 	}
 
 }

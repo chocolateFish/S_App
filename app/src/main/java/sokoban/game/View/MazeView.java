@@ -11,7 +11,8 @@ import sokoban.game.GetMazeInfoCallback;
 import sokoban.game.BlockTypes;
 
 public class MazeView extends View {
-    private Paint paint;
+    private Paint outlinePaint;
+    private Paint fillPaint;
     private int across;
     private int down;
     private int blockLength;
@@ -25,24 +26,34 @@ public class MazeView extends View {
 
     public MazeView(Context context) {
         super(context);
-        //this.across = 5;
-        //this.down = 5;
-        this.minMargin = 50;
-        this.blockOutline = 10;
-        this.paint = new Paint();
+        this.across = 5;
+        this.down = 5;
+        this.minMargin = 10;
+        this.blockOutline = 3;
+        this.init();
     }
+
 
 
     public MazeView(Context context, GetMazeInfoCallback callback) {
         super(context);
-        //this.across = 5;
-        //this.down = 5;
+
         this.minMargin = 50;
         this.blockOutline = 10;
-        this.paint = new Paint();
         this.register(callback);
         this.setAcrossAndDown(callback);
+        this.init();
+    }
 
+    private  void init(){
+        outlinePaint = new Paint();
+        outlinePaint.setColor(Color.BLACK);
+        outlinePaint.setStyle(Paint.Style.STROKE);
+        outlinePaint.setStrokeWidth(this.blockOutline);
+
+        fillPaint = new Paint();
+        fillPaint.setColor(Color.BLACK);
+        fillPaint.setStyle(Paint.Style.FILL);
     }
 
     //won't need this to be public  when I have it going with the maze
@@ -108,14 +119,13 @@ public class MazeView extends View {
         }
     }
 */
-
+    //TODO check stroke width - if the stroke is on the exact edge,itmight onle be hald in the block length itself
     private void setBlockLength(int width, int height){
         int sideLength;
         sideLength = height - (2*this. minMargin);
         if (height > width){
             sideLength = width - (2*this.minMargin);
         }
-        //this.blockLength = sideLength/12;
         this.blockLength = (sideLength /this.down) - (2 * this.blockOutline);
         if (this.across > this.down){
             this.blockLength = (sideLength /this.across)- (2 * this.blockOutline);
@@ -131,127 +141,107 @@ public class MazeView extends View {
 
     protected void drawMaze(Canvas canvas){
         int left;
-        int right;
         int top = this.mazeTop;
-        int bottom;
         // draw a column
         for (int downNum = 0; downNum < this.down; downNum ++) {
             left = this.mazeLeft;
-            bottom = top + this.blockLength;
             //draw a row -
             for (int acrossNum = 0; acrossNum < this.across; acrossNum++) {
-                right = left + this.blockLength;
-                /*
-                if (acrossNum == this.across-1 && downNum == this.down-1) {
-                    this.drawTile(canvas, left, top, right, bottom, FixedTypes.EMPTY);
-                }else if (acrossNum == 0 || acrossNum == (this.across-1)||downNum ==0|| (downNum == this.down-1)){
-                    this.drawTile(canvas, left, top, right, bottom, FixedTypes.WALL);
-
-                }else if(acrossNum %2 == 1  && downNum % 3 == 0 ){
-                    this.drawTile(canvas, left, top, right, bottom, FixedTypes.TARGET);
-                }else  {
-                    this.drawTile(canvas, left, top, right, bottom, FixedTypes.FlOOR);
-                }
-                */
-                //this.drawTileBackground(canvas, left, top, right, bottom, Color.TRANSPARENT);
-                //if (acrossNum == this.manAlong && downNum == this.manDown) {
-                //    this.drawMan(canvas, left, top, right);
-                //}
                 BlockTypes theBlock = this.callback.getBlockType(acrossNum, downNum);
-                this.drawBlock(canvas, left, top, right, bottom, theBlock);
-                left = right;
+                this.drawBlock(canvas, left, top, theBlock);
+                left = left + this.blockLength;;
             }
-            top = bottom;
+            top = top + this.blockLength;
         }
     }
-
-    private void drawBlock(Canvas canvas, int left, int top, int right, int bottom, BlockTypes theBlock){
+    //TODO fix bug - Man on a Target draws as a box on a floor. (even when its not near a box at all)
+    private void drawBlock(Canvas canvas, int left, int top, BlockTypes theBlock){
         switch(theBlock){
             case FlOOR:
-                this.drawBlockBackground(canvas, left, top, right, bottom, Color.LTGRAY);
-                this.drawFloor(canvas, left, top, right);
+                this.drawBlockBackground(canvas, left, top, Color.LTGRAY);
+                this.drawFloor(canvas, left, top);
                 break;
             case TARGET:
-                this.drawBlockBackground(canvas, left, top, right, bottom, Color.LTGRAY);
-                this.drawTarget(canvas, left, top, right, bottom);
+                this.drawBlockBackground(canvas, left, top,  Color.LTGRAY);
+                this.drawTarget(canvas, left, top);
                 break;
             case WALL:
-                this.drawBlockBackground(canvas, left, top, right, bottom, Color.TRANSPARENT);
-                this.drawWall(canvas, left, top, right, bottom);
+                this.drawBlockBackground(canvas, left, top, Color.TRANSPARENT);
+                this.drawWall(canvas, left, top);
                 break;
             case FLOORMAN:
-                this.drawBlockBackground(canvas, left, top, right, bottom, Color.LTGRAY);
-                this.drawFloor(canvas, left, top, right);
-                this.drawMan(canvas, left, top, right);
+                this.drawBlockBackground(canvas, left, top, Color.LTGRAY);
+                this.drawFloor(canvas, left, top);
+                this.drawMan(canvas, left, top, Color.YELLOW);
                 break;
             case TARGETMAN:
-                this.drawBlockBackground(canvas, left, top, right, bottom, Color.LTGRAY);
-                this.drawTarget(canvas, left, top, right, bottom);
-                this.drawMan(canvas, left, top, right);
+                this.drawBlockBackground(canvas, left, top, Color.LTGRAY);
+                this.drawTarget(canvas, left, top);
+                this.drawMan(canvas, left, top, Color.GREEN);
             case FLOORBOX:
-                this.drawBlockBackground(canvas, left, top, right, bottom, Color.LTGRAY);
-                this.drawFloor(canvas, left, top, right);
-                this.drawBox(canvas, left, top, right);
+                this.drawBlockBackground(canvas, left, top, Color.LTGRAY);
+                this.drawFloor(canvas, left, top);
+                this.drawBox(canvas, left, top, Color.BLUE);
                 break;
             case TARGETBOX:
-                this.drawBlockBackground(canvas, left, top, right, bottom, Color.LTGRAY);
-                this.drawTarget(canvas, left, top, right, bottom);
-                this.drawBox(canvas, left, top, right);
+                this.drawBlockBackground(canvas, left, top, Color.LTGRAY);
+                this.drawTarget(canvas, left, top);
+                this.drawBox(canvas, left, top, Color.MAGENTA);
                 break;
             case EMPTY:
                 break;
         }
     }
 
-    private void drawBlockBackground(Canvas canvas, int left, int top, int right, int bottom, int aColor){
-        paint.setColor(aColor);
-        paint.setStyle(Paint.Style.FILL);
-        canvas.drawRect(left, top, right, bottom, paint);
-        paint.setColor(Color.BLACK);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(this.blockOutline);
-        canvas.drawRect(left, top, right, bottom, paint);
+    private void drawBlockBackground(Canvas canvas, int left, int top, int aColor){
+        int right = left + this.blockLength;
+        int bottom = top + this.blockLength;
+        fillPaint.setColor(aColor);
+        canvas.drawRect(left, top, right, bottom, fillPaint);
+        canvas.drawRect(left, top, right, bottom, outlinePaint);
     }
 
-    private void drawTarget(Canvas canvas, int left, int top, int right, int bottom){
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(this.blockOutline);
-        paint.setColor(Color.BLUE);
+    private void drawTarget(Canvas canvas, int left, int top){
+        int margin = 20;
+        int xLeft = left + margin;
+        int xTop = top + margin;
+        int xRight = left + this.blockLength - margin;
+        int xBottom = top + this.blockLength- margin;
         Path path = new Path();
-        path.moveTo(left, top);
-        path.lineTo(right, bottom);
-        path.moveTo(right, top);
-        path.lineTo(left, bottom);
-        path.moveTo(left, top);
+        path.moveTo(xLeft, xTop);
+        path.lineTo(xRight, xBottom);
+        path.moveTo(xRight, xTop);
+        path.lineTo(xLeft, xBottom);
+        path.moveTo(xLeft, xTop);
         path.close();
-        canvas.drawPath(path, paint);
+        canvas.drawPath(path, outlinePaint);
     }
 
-    private void drawFloor(Canvas canvas, int left, int top, int right){
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.GRAY);
-        int margin = 50;
-        float radius = ((right - left)/2) - margin;
+    private void drawFloor(Canvas canvas, int left, int top){
+        fillPaint.setColor(Color.GRAY);
+        //TODO calculate margin as percentage
+        int margin = 10;
+        float radius = (this.blockLength/2) - margin;
         float circlex = left + margin + radius;
         float circleY = top + margin + radius;
-        canvas.drawCircle(circlex, circleY, radius, paint);
+        canvas.drawCircle(circlex, circleY, radius, fillPaint);
     }
 
     //draw triangle
-    private void drawWall(Canvas canvas, int left, int top, int right, int bottom){
-        paint.setStyle(Paint.Style.FILL);
-        paint.setStrokeWidth(this.blockOutline);
-        paint.setColor(Color.RED);
-        int margin = 50;
+    private void drawWall(Canvas canvas, int left, int top){
+        fillPaint.setColor(Color.RED);
 
-        float firstVertexX = left + ((right - left)/2);
+        //TODO - calculate margin as percentage
+        int margin = 10;
+
+        float firstVertexX = left + (this.blockLength/2);
         float firstVertexY = top + margin;
 
         float secondVertexX = left + margin;
-        float secondVertexY = bottom - margin;
+        float secondVertexY = top + this.blockLength - margin;
 
-        float thirdVertexX = right - margin;
-        float thirdVertexY = bottom - margin;
+        float thirdVertexX = left + this.blockLength - margin;
+        float thirdVertexY = top + this.blockLength - margin;
 
         Path path = new Path();
         path.setFillType(Path.FillType.EVEN_ODD);
@@ -260,41 +250,30 @@ public class MazeView extends View {
         path.lineTo(thirdVertexX, thirdVertexY);
         path.lineTo(firstVertexX, firstVertexY);
         path.close();
-        canvas.drawPath(path, paint);
-        paint.setColor(Color.BLACK);
-        paint.setStyle(Paint.Style.STROKE);
-        canvas.drawPath(path, paint);
+        canvas.drawPath(path, fillPaint);
+        canvas.drawPath(path, outlinePaint);
 
     }
 
-    private void drawMan(Canvas canvas, int left, int top, int right){
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.YELLOW);
+    private void drawMan(Canvas canvas, int left, int top, int aColor){
+        fillPaint.setColor(aColor);
+        //TODO - calculate margin as percentage
         int margin = 10;
-        float radius = ((right - left)/2) - margin;
+        float radius = (this.blockLength/2) - margin;
         float circlex = left + margin + radius;
         float circleY = top + margin + radius;
-        canvas.drawCircle(circlex, circleY, radius, paint);
+        canvas.drawCircle(circlex, circleY, radius, fillPaint);
     }
 
-    private void drawBox(Canvas canvas, int left, int top, int right){
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.GREEN);
-        int margin = 10;
-        float radius = ((right - left)/2) - margin;
-        float circlex = left + margin + radius;
-        float circleY = top + margin + radius;
-        canvas.drawCircle(circlex, circleY, radius, paint);
-        /*
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(aColor);
+    private void drawBox(Canvas canvas, int left, int top, int aColor){
+        fillPaint.setColor(aColor);
+        //TODO - calculate margin as percentage
         int margin = 10;
         int rectTop = top + margin;
         int rectLeft = left + margin;
-        int rectRight = rectTop + this.blockLength - margin;
-        int rectBottom = rectLeft - this.blockLength - margin;
-        canvas.drawRect(rectLeft, rectTop, rectRight, rectBottom, paint);
-        */
+        int rectBottom = top + this.blockLength - margin;
+        int rectRight = left + this.blockLength - margin;
+        canvas.drawRect(rectLeft, rectTop, rectRight, rectBottom, fillPaint);
     }
 
 }

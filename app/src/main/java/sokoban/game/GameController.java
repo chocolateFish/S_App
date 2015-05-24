@@ -43,20 +43,10 @@ public class GameController implements SwipeInterface, GetMazeInfoCallback {
 
     }
     public int getMazeWidth (){
+
         return this.myModel.getWidth();
     }
 
-
-/*
-    public void updateBlock(int across, int down, getMazeInfoCallback blockUpdater){
-        BlockTypes theBlock = this.myModel.whoIsAt(across, down);
-        blockUpdater.updateBlock(theBlock);
-    }
-*/
-
-    ///public BlockTypes getBlockAt(int across, int down){
-    //    return this.myModel.whoIsAt(across, down);
-    //}
 
     public void rightToLeft(){
         this.myModel.playTurn(Directions.LEFT);

@@ -12,17 +12,18 @@ import sokoban.game.GameController;
 
 public class MainActivity extends Activity{
     MazeView myMaze;
-    //GameController myController;
+    GameController myController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        GameController myGameController = new GameController();
+         myController = new GameController();
         //GetMazeInfoCallback callback;
         //callback = myGameController;
-        myMaze = new MazeView(this, myGameController);
-        myGameController.setView(myMaze);
+
+        myMaze = new MazeView(this, myController);
+        myController.setView(myMaze);
         //Display display = getWindowManager().getDefaultDisplay();
         //Point size = new Point();
         //display.getSize(size);
@@ -30,8 +31,7 @@ public class MainActivity extends Activity{
         //myMaze.setMazeBounds(size.x, size.y);
         setContentView(myMaze);
 
-        //GameController myGameController = new GameController(myMaze);
-        SwipeDetector swipeDetector = new SwipeDetector(myGameController);
+        SwipeDetector swipeDetector = new SwipeDetector(myController);
         myMaze.setOnTouchListener(swipeDetector);
     }
 

@@ -65,29 +65,57 @@ public class Position implements IPosition {
 		return this.movable;
 	}
 
-	public BlockTypes getBlocks(){
+	public BlockTypes getBlock(){
 		BlockTypes myType;
-		String mySymbol = this.fixed.toString() + this.movable.toString();
+		//String mySymbol = this.fixed.toString() + this.movable.toString();
+		/*switch( mySymbol){
+			case "- ":
+				myType = BlockTypes.FlOOR;
+				break;
+			case "# ":
+				myType = BlockTypes.WALL;
+				break;
+			case ". ":
+				myType = BlockTypes.TARGET;
+				break;
+			case "-@":
+				myType = BlockTypes.FLOORMAN;
+				break;
+			case ".+":
+				myType = BlockTypes.TARGETMAN;
+				break;
+			case "-$":
+				myType = BlockTypes.FLOORBOX;
+				break;
+			case ".*":
+				myType = BlockTypes.TARGETBOX;
+				break;
+			default:
+				myType = BlockTypes.EMPTY;
+				break;
+		}
+		*/
+		String mySymbol = this.toString();
 			switch( mySymbol){
-				case "- ":
+				case "-":
 					myType = BlockTypes.FlOOR;
 					break;
-				case "# ":
+				case "#":
 					myType = BlockTypes.WALL;
 					break;
-				case ". ":
+				case ".":
 					myType = BlockTypes.TARGET;
 					break;
-				case "-@":
+				case "@":
 					myType = BlockTypes.FLOORMAN;
 					break;
-				case ".+":
+				case "+":
 					myType = BlockTypes.TARGETMAN;
 					break;
-				case "-$":
+				case "$":
 					myType = BlockTypes.FLOORBOX;
 					break;
-				case ".*":
+				case "*":
 					myType = BlockTypes.TARGETBOX;
 					break;
 				default:

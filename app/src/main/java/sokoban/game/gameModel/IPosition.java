@@ -21,6 +21,6 @@ public interface IPosition {
 
 	IMovable getMovable();
 	//for UI
-	BlockTypes getBlocks();
+	BlockTypes getBlock();
 
 }
