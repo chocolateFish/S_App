@@ -8,7 +8,7 @@ public interface IMovable {
 
 	boolean isBlank();
 
-	void move(Directions direction);
+	boolean move(Directions direction);
 
 	//unnecessary??
 	//IPosition getPostion();

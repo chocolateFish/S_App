@@ -17,9 +17,10 @@ public class Man extends Movable implements IMovable {
 		}
 		return symbol;
 	}
-
+    //TODO implement this better
 	@Override
-	public void move(Directions direction) {
+	public boolean move(Directions direction) {
+        boolean hasMoved = false;
 		IPosition from = this.currentPosition;
 		IPosition destination = from.getNeighbour(direction);
 		// base case
@@ -27,12 +28,16 @@ public class Man extends Movable implements IMovable {
 			IMovable oldMovable = destination.detach();
 			destination.attach(this);
 			from.attach(oldMovable);
+            hasMoved = true;
 		} else {
 			destination.getMovable().move(direction);
 			if (destination.isVacant()) {
 				this.move(direction);
+                hasMoved = true;
 			}
 		}
+
+        return hasMoved;
 	}
 
 }

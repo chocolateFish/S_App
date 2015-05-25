@@ -162,7 +162,11 @@ public class Maze implements IMaze {
 	}
 
 	public void playTurn(Directions direction) {
-		this.man.move(direction);
+        boolean hasMoved = this.man.move(direction);
+        if (hasMoved) {
+            this.hasMovedCallback.hasMoved();
+        }
+
 	}
 
 	public int getHeight() {

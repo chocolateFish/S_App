@@ -39,10 +39,9 @@ public class GameController implements SwipeInterface, GetMazeInfoCallback, HasM
 
     public int getMazeHeight (){
        return this.myModel.getHeight();
-
     }
-    public int getMazeWidth (){
 
+    public int getMazeWidth (){
         return this.myModel.getWidth();
     }
 

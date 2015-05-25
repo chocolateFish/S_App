@@ -18,7 +18,7 @@ public abstract class Movable implements IMovable{
 		return this.isBlank;
 	}
 
-	public abstract void move(Directions direction);
+	public abstract boolean move(Directions direction);
 
 	//unnecessary
 	//public IPosition getPostion() {

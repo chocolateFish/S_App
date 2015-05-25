@@ -15,7 +15,8 @@ public class Blank extends Movable implements IMovable {
 	}
 
 	@Override
-	public void move(Directions direction) {
+	public boolean move(Directions direction) {
+        return false;
 	}
 
 }
