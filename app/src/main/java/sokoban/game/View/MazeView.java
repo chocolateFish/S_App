@@ -20,8 +20,6 @@ public class MazeView extends View {
     private int minMargin;
     private int mazeTop;
     private int mazeLeft;
-    private int manAlong;
-    private int manDown;
     private GetMazeInfoCallback callback;
 
     public MazeView(Context context) {
@@ -29,38 +27,24 @@ public class MazeView extends View {
         this.across = 5;
         this.down = 5;
         this.minMargin = 10;
-        this.blockOutline = 3;
-        this.init();
+        this.drawingSetup();
     }
-
-
 
     public MazeView(Context context, GetMazeInfoCallback callback) {
         super(context);
-
-        this.minMargin = 50;
-        this.blockOutline = 10;
         this.register(callback);
         this.setAcrossAndDown(callback);
-        this.init();
+        this.drawingSetup();
     }
 
-    private  void init(){
+    private  void drawingSetup(){
         outlinePaint = new Paint();
         outlinePaint.setColor(Color.BLACK);
         outlinePaint.setStyle(Paint.Style.STROKE);
-        outlinePaint.setStrokeWidth(this.blockOutline);
-
+        outlinePaint.setStrokeWidth(10);
         fillPaint = new Paint();
         fillPaint.setColor(Color.BLACK);
         fillPaint.setStyle(Paint.Style.FILL);
-    }
-
-    //won't need this to be public  when I have it going with the maze
-    public void setManPos(int along, int down) {
-        this.manAlong = along;
-        this.manDown = down;
-        invalidate();
     }
 
     private void setAcrossAndDown(GetMazeInfoCallback callback) {
@@ -79,6 +63,7 @@ public class MazeView extends View {
 
         this.setBlockLength(width, height);
         this.setMazeBounds(width, height);
+
         drawMaze(canvas);
     }
 
@@ -118,26 +103,52 @@ public class MazeView extends View {
                 return super.onTouchEvent(event);
         }
     }
+
 */
-    //TODO check stroke width - if the stroke is on the exact edge,itmight onle be hald in the block length itself
+    //Calculations based on canvas size
+
+    // not sure if percentage is best as a float.
+    private int calcPercentageOfValue(int percentage, int value){
+        float ans = (percentage * value)/100;
+        return Math.round(ans);
+    }
+
+    //Stroke is centered, so only takes up half the blockOutline value on each side
+    private void setMinMargin(int shorterSide){
+        this.minMargin = calcPercentageOfValue(8, shorterSide);
+    }
+
+    //Stroke is centered, so only takes up half the blockoutline value on each side
+    private void setBlockOutline(int shorterSide){
+        int outline = calcPercentageOfValue(1, shorterSide);
+        // the outline will always be atleast 3;
+        this.blockOutline = Math.max(outline, 3);
+        outlinePaint.setStrokeWidth(this.blockOutline);
+    }
+
+    //Stroke is centered, so only takes up half the blockoutline value on each side
     private void setBlockLength(int width, int height){
-        int sideLength;
-        sideLength = height - (2*this. minMargin);
-        if (height > width){
-            sideLength = width - (2*this.minMargin);
+        int shorterSide = width;
+        if (height < width){
+            shorterSide = height;
         }
-        this.blockLength = (sideLength /this.down) - (2 * this.blockOutline);
+        this.setMinMargin(shorterSide);
+        this.setBlockOutline(shorterSide);
+        int shorterSideLength = shorterSide - (2*this. minMargin);
+        this.blockLength = Math.round((shorterSideLength /this.down) - (this.blockOutline));
         if (this.across > this.down){
-            this.blockLength = (sideLength /this.across)- (2 * this.blockOutline);
+            this.blockLength = Math.round((shorterSideLength /this.across)- (this.blockOutline));
         }
     }
 
     private void setMazeBounds(int width,int height){
         int mazeWidth = this.blockLength * this.across;
-        this.mazeLeft = (width - mazeWidth)/2;
+        this.mazeLeft = Math.round((width - mazeWidth)/2);
         int mazeHeight = this.blockLength * this.down;
-        this.mazeTop = (height - mazeHeight)/2;
+        this.mazeTop = Math.round((height - mazeHeight)/2);
     }
+
+    //end of calculations based on canvas size
 
     protected void drawMaze(Canvas canvas){
         int left;
@@ -203,7 +214,7 @@ public class MazeView extends View {
     }
 
     private void drawTarget(Canvas canvas, int left, int top){
-        int margin = 20;
+        int margin = this.calcPercentageOfValue(30, this.blockLength);
         int xLeft = left + margin;
         int xTop = top + margin;
         int xRight = left + this.blockLength - margin;
@@ -220,8 +231,7 @@ public class MazeView extends View {
 
     private void drawFloor(Canvas canvas, int left, int top){
         fillPaint.setColor(Color.GRAY);
-        //TODO calculate margin as percentage
-        int margin = 20;
+        int margin = this.calcPercentageOfValue(20, this.blockLength);
         float radius = (this.blockLength/2) - margin;
         float circleX = left + margin + radius;
         float circleY = top + margin + radius;
@@ -231,9 +241,7 @@ public class MazeView extends View {
     //draw triangle
     private void drawWall(Canvas canvas, int left, int top){
         fillPaint.setColor(Color.RED);
-
-        //TODO - calculate margin as percentage
-        int margin = 10;
+        int margin = this.calcPercentageOfValue(20, this.blockLength);
 
         float firstVertexX = left + (this.blockLength/2);
         float firstVertexY = top + margin;
@@ -258,8 +266,7 @@ public class MazeView extends View {
 
     private void drawMan(Canvas canvas, int left, int top, int aColor){
         fillPaint.setColor(aColor);
-        //TODO - calculate margin as percentage
-        int margin = 10;
+        int margin = this.calcPercentageOfValue(10, this.blockLength);
         float radius = (this.blockLength/2) - margin;
         float circleX = left + margin + radius;
         float circleY = top + margin + radius;
@@ -268,8 +275,7 @@ public class MazeView extends View {
 
     private void drawBox(Canvas canvas, int left, int top, int aColor){
         fillPaint.setColor(aColor);
-        //TODO - calculate margin as percentage
-        int margin = 10;
+        int margin = this.calcPercentageOfValue(10, this.blockLength);
         int rectTop = top + margin;
         int rectLeft = left + margin;
         int rectBottom = top + this.blockLength - margin;

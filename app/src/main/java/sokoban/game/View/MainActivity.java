@@ -31,7 +31,7 @@ public class MainActivity extends Activity{
         //myMaze.setMazeBounds(size.x, size.y);
         setContentView(myMaze);
 
-        SwipeDetector swipeDetector = new SwipeDetector(myController);
+        SwipeDetector swipeDetector = new SwipeDetector(myController, this);
         myMaze.setOnTouchListener(swipeDetector);
     }
 
