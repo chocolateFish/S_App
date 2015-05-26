@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MySokonabApplication.iml" filepath="$PROJECT_DIR$/MySokonabApplication.iml" />
-      <module fileurl="file://$PROJECT_DIR$/S_App.iml" filepath="$PROJECT_DIR$/S_App.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>
-
