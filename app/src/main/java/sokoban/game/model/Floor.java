@@ -1,4 +1,4 @@
-package sokoban.game.gameModel;
+package sokoban.game.model;
 
 public class Floor extends Fixed implements IFixed {
 

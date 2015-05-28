@@ -1,4 +1,4 @@
-package sokoban.game.gameModel;
+package sokoban.game.model;
 import sokoban.Directions;
 
 public class Box extends Movable implements IMovable {

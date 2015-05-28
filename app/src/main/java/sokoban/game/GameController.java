@@ -1,10 +1,10 @@
 package sokoban.game;
 
 import sokoban.Directions;
-import sokoban.game.View.MazeView;
-import sokoban.game.gameModel.IMaze;
-import sokoban.game.gameModel.Maze;
-import sokoban.game.View.SwipeInterface;
+import sokoban.game.view.MazeView;
+import sokoban.game.model.IMaze;
+import sokoban.game.model.Maze;
+import sokoban.game.view.SwipeInterface;
 
 /**
  * Created by User on 18/05/2015.
@@ -62,6 +62,10 @@ public class GameController implements SwipeInterface, GetMazeInfoCallback, HasM
         //int manAcross = this.person.getAcross();
        // int manDown = this.person.getDown();
        // this.myView.setManPos(manAcross, manDown);
+    }
+
+    public void tooShortSwipe(CharSequence text){
+        this.myView.doSwipeToast(text);
     }
 
     //TODO

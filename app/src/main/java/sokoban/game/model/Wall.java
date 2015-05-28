@@ -1,4 +1,4 @@
-package sokoban.game.gameModel;
+package sokoban.game.model;
 
 public class Wall extends Fixed implements IFixed {
 	Wall() {

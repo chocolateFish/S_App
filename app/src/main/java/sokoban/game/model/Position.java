@@ -1,4 +1,4 @@
-package sokoban.game.gameModel;
+package sokoban.game.model;
 
 import sokoban.Directions;
 import sokoban.game.BlockTypes;
@@ -36,14 +36,11 @@ public class Position implements IPosition {
 	public IPosition getNeighbour(Directions dir) {
 		int across = this.across + dir.horizontal;
 		int down = this.down + dir.vertical;
-		IPosition destination = maze.find(across, down);
-		return destination;
+		return maze.find(across, down);
 	}
 
 	public boolean isVacant() {
-		boolean isVacant = true;
-		isVacant = this.fixed.isAvailable() && (this.movable.isBlank());
-		return isVacant;
+		return this.fixed.isAvailable() && (this.movable.isBlank());
 	}
 
 	public void attach(IMovable movable) {
