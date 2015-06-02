@@ -12,18 +12,26 @@
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-        android:name="sokoban.game.view.GameActivity"
-        android:label="@string/title_activity_game" >
-    </activity>
+            android:name="sokoban.game.view.GameActivity"
+            android:label="@string/title_activity_game"
+            android:parentActivityName="sokoban.mainView.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="sokoban.mainView.MainActivity" />
+        </activity>
         <activity
             android:name="sokoban.filer.view.FilerActivity"
-            android:label="@string/title_activity_filer" >
+            android:label="@string/title_activity_filer"
+            android:parentActivityName="sokoban.mainView.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="sokoban.mainView.MainActivity" />
         </activity>
-
     </application>
 
 </manifest>

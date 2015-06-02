@@ -9,8 +9,20 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/saveAsInput"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:hint="Enter key"
+        android:background="@android:color/background_light" />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/saveLevelInput"
-        android:layout_marginTop="60dp"
+        android:layout_below="@+id/saveAsInput"
+        android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
         android:inputType="textCapCharacters"
         android:layout_marginLeft="30dp"
@@ -18,7 +30,8 @@
         android:singleLine="false"
         android:outlineProvider="bounds"
         android:editable="false"
-        android:background="@android:color/background_light" />
+        android:background="@android:color/background_light"
+        android:hint="Enter Level as a string" />
 
     <Button
         android:layout_width="match_parent"
@@ -26,9 +39,10 @@
         android:text="@string/saveLevelBtn"
         android:id="@+id/saveLevelBtn"
         android:layout_below="@+id/saveLevelInput"
-        android:layout_above="@+id/textView"
         android:layout_centerHorizontal="true"
-        android:layout_margin="60dp" />
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="60dp" />
 
 
 
@@ -42,7 +56,8 @@
         android:layout_marginRight="30dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/saveLevelBtn"
-        android:layout_above="@+id/playLevelBtn" />
+        android:layout_above="@+id/playLevelBtn"
+        android:layout_marginTop="30dp" />
 
 
 
@@ -55,7 +70,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="60dp"
         android:layout_marginRight="60dp"
-        android:layout_marginTop="60dp" />
+        android:layout_marginTop="30dp" />
 
 
 </RelativeLayout>
