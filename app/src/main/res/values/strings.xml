@@ -1,7 +1,12 @@
 <resources>
     <string name="app_name">My SokonabApplication</string>
-
+    <string name="title_activity_filer">FilerActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_game">GameActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_filer">FilerActivity</string>
+
+    <string name="playLevel">Play Level</string>
+    <string name="saveLevelBtn">Save Level</string>
+
 </resources>
