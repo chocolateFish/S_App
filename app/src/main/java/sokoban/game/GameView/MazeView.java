@@ -1,4 +1,4 @@
-package sokoban.game.View;
+package sokoban.game.GameView;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.view.View;
+import android.widget.Toast;
 
 import sokoban.game.GetMazeInfoCallback;
 import sokoban.game.BlockTypes;
@@ -21,6 +22,7 @@ public class MazeView extends View {
     private int mazeTop;
     private int mazeLeft;
     private GetMazeInfoCallback callback;
+    private Toast swipeToast;
 
     public MazeView(Context context) {
         super(context);
@@ -35,6 +37,9 @@ public class MazeView extends View {
         this.register(callback);
         this.setAcrossAndDown(callback);
         this.drawingSetup();
+        int duration = Toast.LENGTH_SHORT;
+        CharSequence text = "toastText";
+        swipeToast = Toast.makeText(context, text, duration);
     }
 
     private  void drawingSetup(){
@@ -45,6 +50,7 @@ public class MazeView extends View {
         fillPaint = new Paint();
         fillPaint.setColor(Color.BLACK);
         fillPaint.setStyle(Paint.Style.FILL);
+
     }
 
     private void setAcrossAndDown(GetMazeInfoCallback callback) {
@@ -107,21 +113,18 @@ public class MazeView extends View {
 */
     //Calculations based on canvas size
 
-    // not sure if percentage is best as a float.
     private int calcPercentageOfValue(int percentage, int value){
         float ans = (percentage * value)/100;
         return Math.round(ans);
     }
 
-    //Stroke is centered, so only takes up half the blockOutline value on each side
     private void setMinMargin(int shorterSide){
         this.minMargin = calcPercentageOfValue(8, shorterSide);
     }
 
-    //Stroke is centered, so only takes up half the blockoutline value on each side
     private void setBlockOutline(int shorterSide){
         int outline = calcPercentageOfValue(1, shorterSide);
-        // the outline will always be atleast 3;
+        // the outline will always be at least 3;
         this.blockOutline = Math.max(outline, 3);
         outlinePaint.setStrokeWidth(this.blockOutline);
     }
@@ -281,6 +284,11 @@ public class MazeView extends View {
         int rectBottom = top + this.blockLength - margin;
         int rectRight = left + this.blockLength - margin;
         canvas.drawRect(rectLeft, rectTop, rectRight, rectBottom, fillPaint);
+    }
+
+    public void doSwipeToast(CharSequence text){
+        swipeToast.setText(text);
+        swipeToast.show();
     }
 
 }

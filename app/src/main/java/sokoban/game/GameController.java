@@ -1,10 +1,10 @@
 package sokoban.game;
 
 import sokoban.Directions;
-import sokoban.game.view.MazeView;
+import sokoban.game.GameView.MazeView;
 import sokoban.game.model.IMaze;
 import sokoban.game.model.Maze;
-import sokoban.game.view.SwipeInterface;
+import sokoban.game.GameView.SwipeInterface;
 
 /**
  * Created by User on 18/05/2015.

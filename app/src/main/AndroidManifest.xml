@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="sokoban.game.view.GameActivity"
+            android:name="sokoban.game.GameView.GameActivity"
             android:label="@string/title_activity_game"
             android:parentActivityName="sokoban.mainView.MainActivity" >
             <meta-data
