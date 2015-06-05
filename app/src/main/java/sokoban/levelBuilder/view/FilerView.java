@@ -1,4 +1,4 @@
-package sokoban.filer.view;
+package sokoban.levelBuilder.view;
 
 import android.content.Context;
 import android.widget.Button;

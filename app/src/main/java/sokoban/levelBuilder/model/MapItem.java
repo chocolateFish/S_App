@@ -1,4 +1,4 @@
-package sokoban.filer.model;
+package sokoban.levelBuilder.model;
 
 public enum MapItem {
     WALL("#"),

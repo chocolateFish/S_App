@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.example.user.mysokonabapplication.R;
 
-import sokoban.filer.view.FilerActivity;
+import sokoban.levelBuilder.view.FilerActivity;
 
 public class MainActivity extends Activity {
 

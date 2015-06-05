@@ -1,6 +1,6 @@
-package sokoban.filer;
+package sokoban.levelBuilder;
 
-import sokoban.filer.model.FileHandler;
+import sokoban.levelBuilder.model.FileHandler;
 
 public class FilerController implements IFileHandlerCallback {
     FileHandler myModel;

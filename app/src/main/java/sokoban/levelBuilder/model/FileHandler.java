@@ -1,4 +1,4 @@
-package sokoban.filer.model;
+package sokoban.levelBuilder.model;
 
 import java.io.BufferedWriter;
 import java.io.File;
