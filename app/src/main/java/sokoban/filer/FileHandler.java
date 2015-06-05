@@ -1,4 +1,4 @@
-package sokoban.levelBuilder.model;
+package sokoban.filer;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -6,10 +6,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import sokoban.filer.IFiler;
+
 /**
  * Created by User on 3/06/2015.
  */
-public class FileHandler implements IFiler{
+public class FileHandler implements IFiler {
     public String zip(String map) {
         String zipMap = "";
         int count = 1;

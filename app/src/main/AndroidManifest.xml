@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.user.mysokonabapplication" >
-    <uses-sdk android:minSdkVersion="19"
-        android:targetSdkVersion="22"
-       />
-    <application
 
+    <uses-sdk
+        android:minSdkVersion="19"
+        android:targetSdkVersion="22" />
+
+    <android:uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+
+    <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -28,8 +37,16 @@
                 android:value="sokoban.mainView.MainActivity" />
         </activity>
         <activity
-            android:name="sokoban.levelBuilder.view.FilerActivity"
+            android:name="sokoban.levelBuilder.view.LevelBuilderActivity"
             android:label="@string/title_activity_filer"
+            android:parentActivityName="sokoban.mainView.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="sokoban.mainView.MainActivity" />
+        </activity>
+        <activity
+            android:name="sokoban.LevelSelector.LevelSelectorActivity"
+            android:label="@string/title_activity_level_selector"
             android:parentActivityName="sokoban.mainView.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

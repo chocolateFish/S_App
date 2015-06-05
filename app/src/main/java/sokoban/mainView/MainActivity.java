@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.example.user.mysokonabapplication.R;
 
-import sokoban.levelBuilder.view.FilerActivity;
+import sokoban.levelBuilder.view.LevelBuilderActivity;
 
 public class MainActivity extends Activity {
 
@@ -42,7 +42,7 @@ public class MainActivity extends Activity {
     }
 
     public void goToLevelBuilder(View view) {
-        Intent intent = new Intent(this, FilerActivity.class);
+        Intent intent = new Intent(this, LevelBuilderActivity.class);
         startActivity(intent);
 
     }

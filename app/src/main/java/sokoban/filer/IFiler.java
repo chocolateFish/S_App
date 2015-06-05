@@ -1,4 +1,4 @@
-package sokoban.levelBuilder.model;
+package sokoban.filer;
 
 import java.io.IOException;
 

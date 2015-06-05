@@ -2,12 +2,12 @@ package sokoban.levelBuilder.model;
 
 public enum MapItem {
     WALL("#"),
-    EMPTYGOAL("."),
-    MANFLOOR("@"),
-    MANGOAL("+"),
-    BOXFLOOR("$"),
-    BOXGOAL("*"),
-    NEWLINE("|");
+    EMPTY_GOAL("."),
+    MAN_FLOOR("@"),
+    MAN_GOAL("+"),
+    BOX_FLOOR("$"),
+    BOX_GOAL("*"),
+    NEW_LINE("|");
 
     public final String tile;
 

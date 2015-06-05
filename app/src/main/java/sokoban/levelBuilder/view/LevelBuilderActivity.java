@@ -12,23 +12,22 @@ import android.widget.Toast;
 
 import com.example.user.mysokonabapplication.R;
 
-import sokoban.levelBuilder.FilerController;
+import sokoban.levelBuilder.LevelBuilderController;
 
-public class FilerActivity extends Activity {
+public class LevelBuilderActivity extends Activity {
     //using SahredPreferences for storing data
     SharedPreferences sharedPref;
-    SharedPreferences.Editor editor;
-    FilerController myController;
-
+    LevelBuilderController myController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filer);
-        this.myController = new FilerController();
+        this.myController = new LevelBuilderController();
         //using SahredPreferences for storing data
-        this.sharedPref = getPreferences(MODE_PRIVATE);
-        this.editor = sharedPref.edit();
+        this.sharedPref = this.getSharedPreferences(
+                getString(R.string.preference_file_key), this.MODE_PRIVATE);
+
     }
 
   //  @Override
@@ -61,7 +60,7 @@ public class FilerActivity extends Activity {
         EditText saveLevelInput = (EditText) findViewById(R.id.saveLevelInput);
         String maze = saveLevelInput.getText().toString();
         String zippedMaze = this.myController.getZippedString(maze);
-
+        SharedPreferences.Editor editor  = sharedPref.edit();
         editor.putString(key, zippedMaze);
         editor.commit();
         //TODO
@@ -76,6 +75,4 @@ public class FilerActivity extends Activity {
         Toast toast = Toast.makeText(this, testString, duration);
         toast.show();
     }
-
-
 }
