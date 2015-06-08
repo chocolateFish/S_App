@@ -12,10 +12,8 @@ import android.widget.Toast;
 
 
 import com.example.user.mysokonabapplication.R;
-
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
+
 
 import sokoban.levelBuilder.LevelBuilderController;
 
@@ -89,32 +87,18 @@ public class LevelBuilderActivity extends Activity {
     }
 
     public void displayAll(View view){
-        String defaultValue = "No Such Maze";
+        StringBuilder sb = new StringBuilder();
         Map<String, ?> allMazes = this.sharedPref.getAll();
         //FileHandlerCallback
-        Set keys = allMazes.keySet();
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, ?> e : allMazes.entrySet()) {
-
-            //to get key //e.getKey();
-            //and to get value //e.getValue();
-
+        for (Map.Entry<String, ?> e : allMazes.entrySet()){
+            String value = e.getValue().toString();
+            String unzippedValue = this.myController.getUnZippedString(value);
+            sb.append(e.getKey() + '-' + unzippedValue + '\n');
+           // sb.append(e.getKey() + '-' + this.myController.getUnZippedString(e.getValue().toString()) + '\n');
         }
-
-        /*
-        for (Iterator i = keys.iterator(); i.hasNext();){
-            String key = (String) i.next();
-            String value = (String) allMazes.get(key);
-            textview.setText(key + " = " + value);
-        }
-        */
-
-        TextView allMazesText= (TextView) findViewById(R.id.allMazesText);
-
-        //CharSequence testString = this.myController.getUnZippedString(test);
-        //int duration = Toast.LENGTH_SHORT;
-       // Toast toast = Toast.makeText(this, testString, duration);
-       // toast.show();
+        TextView allMazesText = (TextView) findViewById(R.id.allMazesText);
+        CharSequence displayTxt = sb.toString();
+        allMazesText.setText(displayTxt);
     }
-
 }
+
