@@ -43,15 +43,33 @@
         android:layout_marginRight="60dp"
         android:onClick="saveLevelToKey" />
 
+
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/playLevel"
-        android:id="@+id/playLevelBtn"
-        android:layout_alignParentBottom="true"
+        android:text="@string/displayAll"
+        android:id="@+id/displayAllBtn"
+        android:layout_below="@+id/saveLevelBtn"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="60dp"
         android:layout_marginRight="60dp"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp"
+        android:onClick="displayAll"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/allMazesText"
+        android:layout_below="@+id/displayAllBtn"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:singleLine="false"
+        android:background="@android:color/background_light"
+        />
+
+
 
 </RelativeLayout>

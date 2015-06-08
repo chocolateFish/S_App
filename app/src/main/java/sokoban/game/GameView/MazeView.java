@@ -69,10 +69,8 @@ public class MazeView extends View {
 
         this.setBlockLength(width, height);
         this.setMazeBounds(width, height);
-
         drawMaze(canvas);
     }
-
 /*
     // This example shows an Activity, but you would use the same approach if
 // you were subclassing a View.

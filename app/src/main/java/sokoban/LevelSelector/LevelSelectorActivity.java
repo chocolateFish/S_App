@@ -19,7 +19,6 @@ public class LevelSelectorActivity extends ListActivity {
         //using SahredPreferences for storing data
         this.sharedPref = this.getSharedPreferences(
                 getString(R.string.preference_file_key), this.MODE_PRIVATE);
-
         setContentView(R.layout.activity_level_selector);
     }
     //@Override
