@@ -1,4 +1,4 @@
-package sokoban.levelBuilder;
+package sokoban;
 
 public interface IFileHandlerCallback {
     public String getZippedString(String toZipStr);

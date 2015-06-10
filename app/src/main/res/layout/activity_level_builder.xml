@@ -11,20 +11,31 @@
         android:layout_height="wrap_content"
         android:id="@+id/saveAsInput"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_margin="30dp"
         android:hint="Enter key"
         android:background="@android:color/background_light" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/check_key"
+        android:id="@+id/checkKeyBtn"
+        android:layout_below="@+id/saveAsInput"
+        android:onClick="checkKey"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+   />
 
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/saveLevelInput"
-        android:layout_below="@+id/saveAsInput"
-        android:layout_marginTop="30dp"
+        android:layout_below="@+id/checkKeyBtn"
+        android:layout_marginBottom="30dp"
         android:layout_centerHorizontal="true"
-        android:inputType="textCapCharacters"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:singleLine="false"
@@ -42,34 +53,6 @@
         android:layout_marginTop="30dp"
         android:layout_marginRight="60dp"
         android:onClick="saveLevelToKey" />
-
-
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/displayAll"
-        android:id="@+id/displayAllBtn"
-        android:layout_below="@+id/saveLevelBtn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_marginTop="30dp"
-        android:onClick="displayAll"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/allMazesText"
-        android:layout_below="@+id/displayAllBtn"
-        android:layout_marginTop="30dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:singleLine="false"
-        android:background="@android:color/background_light"
-        />
-
 
 
 </RelativeLayout>

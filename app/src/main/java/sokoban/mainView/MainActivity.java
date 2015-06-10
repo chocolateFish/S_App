@@ -1,17 +1,18 @@
 package sokoban.mainView;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.example.user.mysokonabapplication.R;
 
+import sokoban.LevelSelector.LevelSelectorActivity;
 import sokoban.levelBuilder.view.LevelBuilderActivity;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,5 +46,10 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, LevelBuilderActivity.class);
         startActivity(intent);
 
+    }
+
+    public void goToLevelSelector(View view){
+        Intent intent = new Intent(this, LevelSelectorActivity.class);
+        startActivity(intent);
     }
 }

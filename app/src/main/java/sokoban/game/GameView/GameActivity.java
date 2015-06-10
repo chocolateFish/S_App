@@ -1,16 +1,17 @@
 package sokoban.game.GameView;
 
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
 import sokoban.game.GameController;
 //import sokoban.game.GetMazeInfoCallback;
 
-//import android.view.Menu;
-//import android.view.MenuItem;
+import android.view.Menu;
+import android.view.MenuItem;
 
 
-public class GameActivity extends Activity{
+public class GameActivity extends AppCompatActivity {
     MazeView myMaze;
     GameController myController;
 
@@ -29,9 +30,7 @@ public class GameActivity extends Activity{
         SwipeDetector swipeDetector = new SwipeDetector(myController);
         myMaze.setOnTouchListener(swipeDetector);
     }
-
-
-/*
+  /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -53,7 +52,5 @@ public class GameActivity extends Activity{
 
         return super.onOptionsItemSelected(item);
     }
-
-
-*/
+    */
 }
