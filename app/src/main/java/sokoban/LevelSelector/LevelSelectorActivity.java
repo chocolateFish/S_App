@@ -15,15 +15,12 @@ import sokoban.IFileHandlerCallback;
 import sokoban.StorageCallback;
 
 public class LevelSelectorActivity extends AppCompatActivity {
-    IFileHandlerCallback filer;
     //using SharedPreferences for storing data
     SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        this.filer = new StorageCallback();
         //using SahredPreferences for storing data
         Context sokoContext = getApplicationContext();
         this.sharedPref = sokoContext.getSharedPreferences(
@@ -39,10 +36,10 @@ public class LevelSelectorActivity extends AppCompatActivity {
         Map<String, ?> allMazes = this.sharedPref.getAll();
         for (Map.Entry<String, ?> e : allMazes.entrySet()){
             String value = e.getValue().toString();
-            ////FileHandlerCallback
+            ////TODO - register?
 
-            String unzippedValue = this.filer.getUnZippedString(value);
-            sb.append(e.getKey() + '-' + unzippedValue + '\n');
+            String unzippedValue = StorageCallback.getUnZippedString(value);
+            sb.append(e.getKey()).append('-').append(unzippedValue).append('\n');
             // sb.append(e.getKey() + '-' + this.myController.getUnZippedString(e.getValue().toString()) + '\n');
         }
         TextView allMazesText = (TextView) findViewById(R.id.allMazesText);

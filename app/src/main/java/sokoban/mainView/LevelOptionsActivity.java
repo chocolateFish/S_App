@@ -13,6 +13,8 @@ import com.example.user.mysokonabapplication.R;
 import sokoban.levelBuilder.view.LevelBuilderActivity;
 
 public class LevelOptionsActivity extends AppCompatActivity {
+    public final static String EXTRA_MESSAGE = "SelectedLevelKey.MESSAGE";
+    private String myKey;
 
 
     @Override
@@ -21,9 +23,9 @@ public class LevelOptionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_level_options);
 
         Intent intent = getIntent();
-        String message = intent.getStringExtra(LevelBuilderActivity.EXTRA_MESSAGE);
+        this.myKey = intent.getStringExtra(LevelBuilderActivity.EXTRA_MESSAGE);
         TextView selectedLevel =  (TextView) findViewById(R.id.selectedName);
-        selectedLevel.setText(message);
+        selectedLevel.setText(this.myKey);
     }
 
 
@@ -51,8 +53,7 @@ public class LevelOptionsActivity extends AppCompatActivity {
 
     public void doEditLevel(View view){
         Intent intent = new Intent(this, LevelBuilderActivity.class);
-
-        //String message = editText.getText().toString();
-        //intent.putExtra(EXTRA_MESSAGE, message);
+        intent.putExtra(EXTRA_MESSAGE, this.myKey);
+        startActivity(intent);
     }
 }

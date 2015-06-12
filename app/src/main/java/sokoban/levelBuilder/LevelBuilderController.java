@@ -6,22 +6,10 @@ import sokoban.filer.IFiler;
 import sokoban.levelBuilder.model.ILevelMap;
 import sokoban.levelBuilder.model.LevelMap;
 
-public class LevelBuilderController implements IFileHandlerCallback, ILevelBuilderCallback {
+public class LevelBuilderController implements  ILevelBuilderCallback {
     ILevelMap myModel;
-    //TODO - find out if filer can be static
-    IFiler myFiler;
-
     public LevelBuilderController(){
-        this.myFiler = new FileHandler();
-
-    }
-
-    public String getZippedString(String toZipStr){
-        return this.myFiler.zip(toZipStr);
-    }
-
-    public String getUnZippedString(String toUnzipStr){
-        return this.myFiler.unZip(toUnzipStr);
+     super();
     }
 
     public void buildLevel(String buildStr){

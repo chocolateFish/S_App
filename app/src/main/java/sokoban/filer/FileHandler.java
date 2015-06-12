@@ -9,10 +9,15 @@ import java.util.Scanner;
 import sokoban.filer.IFiler;
 
 /**
- * Created by User on 3/06/2015.
+ * Code by Filer Model group
+ * - changed zip and unzip to static methods.
  */
 public class FileHandler implements IFiler {
-    public String zip(String map) {
+    private FileHandler(){
+        super();
+    }
+
+    public static String zip(String map) {
         String zipMap = "";
         int count = 1;
         int i = 0;
@@ -43,7 +48,7 @@ public class FileHandler implements IFiler {
         return zipMap;
     }
 
-    public String unZip(String zippedMap) {
+    public static String unZip(String zippedMap) {
         String outputMap = "";
         String tempQty = "";
         char ch;
@@ -82,7 +87,7 @@ public class FileHandler implements IFiler {
         return outputMap;
     }
 
-    public String importMap(String filePath) throws IOException {
+    public  String importMap(String filePath) throws IOException {
         String outputMap = "";
         /*
         // read the file at the provided path
