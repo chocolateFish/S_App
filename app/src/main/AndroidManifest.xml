@@ -52,7 +52,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="sokoban.mainView.MainActivity" />
         </activity>
-
+        <activity
+            android:name="sokoban.mainView.LevelOptionsActivity"
+            android:label="@string/title_activity_level_options"
+            android:parentActivityName="sokoban.LevelSelector.LevelSelectorActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="sokoban.LevelSelector.LevelSelectorActivity" />
+        </activity>
     </application>
 
 </manifest>

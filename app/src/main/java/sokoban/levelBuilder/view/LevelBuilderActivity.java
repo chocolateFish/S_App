@@ -1,6 +1,7 @@
 package sokoban.levelBuilder.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +12,10 @@ import android.widget.Toast;
 
 import com.example.user.mysokonabapplication.R;
 import sokoban.levelBuilder.LevelBuilderController;
+import sokoban.mainView.LevelOptionsActivity;
 
 public class LevelBuilderActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+    public final static String EXTRA_MESSAGE = "SelectedLevelKey.MESSAGE";
     //using SahredPreferences for storing data
     SharedPreferences sharedPref;
     //TODO - Interface?? - for callbacks. HowTo??
@@ -27,6 +30,11 @@ public class LevelBuilderActivity extends AppCompatActivity implements SharedPre
         Context sokoContext = getApplicationContext();
         this.sharedPref = sokoContext.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        //if intent.getStringExtra(LevelOptionsActivity.EXTRA_MESSAGE) != null
+        //    POTULATE EACH FILED - KEY / MAZE
+        //else
+        //....
     }
 
    /*
@@ -66,15 +74,19 @@ public class LevelBuilderActivity extends AppCompatActivity implements SharedPre
 
         //then get the string back out
         String maze = this.myController.levelToString();
-        //FileHandlerCallback- zipp the string
+        //FileHandlerCallback- zip the string
         String zippedMaze = this.myController.getZippedString(maze);
         SharedPreferences.Editor editor  = sharedPref.edit();
         editor.putString(key, zippedMaze);
-       //editor.apply(); //androidstudio says itshould be this?
-        editor.commit();
+        editor.apply();
+       // editor.commit();
         //clear fields
-        saveAsInput.setText("");
-        saveLevelInput.setText("");
+        //saveAsInput.setText("");
+        //saveLevelInput.setText("");
+
+        Intent intent = new Intent(this, LevelOptionsActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, key);
+        startActivity(intent);
     }
 
     //ideally this would be in a TextWatcher listener - not attached to button.
@@ -92,6 +104,7 @@ public class LevelBuilderActivity extends AppCompatActivity implements SharedPre
         }
         Toast toast = Toast.makeText(this, msgString, Toast.LENGTH_LONG);
         toast.show();
+
     }
 
     public void	onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key){
