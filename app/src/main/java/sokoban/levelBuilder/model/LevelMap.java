@@ -54,9 +54,10 @@ public class LevelMap implements ILevelMap {
 
     @Override
     public void setString(String s) {
+
         Scanner scanner = new Scanner(s);
-        int y = 0;
-        int x  =0;
+        int y;
+        int x;
         String thisLine;
         String thisChar;
 
@@ -67,7 +68,7 @@ public class LevelMap implements ILevelMap {
 
         for (y=0;(y<rows) && (scanner.hasNextLine());y++) {
             thisLine = scanner.nextLine();
-            //System.out.println("Line " + y + " : '" + thisLine + "'"); System.out.flush();
+            System.out.println("Line " + y + " : '" + thisLine + "'"); System.out.flush();
             for (x=0;(x < cols) && (x < thisLine.length());x++) {
                 thisChar = thisLine.substring(x, x+1); // select one character, 0-indexed
                 System.out.println("Setting " + x + "," + y + " to " + thisChar);
@@ -79,27 +80,24 @@ public class LevelMap implements ILevelMap {
 
     @Override
     public String getString() {
-        // TODO Auto-generated method stub
-
         String s = "";
         for (int y=0;y<rows;y++) {
             for (int x=0;x<cols;x++) {
                 s += getCell(x,y).getString();
             }
-            if (y<rows-1) {s += "\n";} // add a \n but not after the last line
+           // if (y<rows-1) {s += "\n";} // add a \n but not after the last line
+           s += "\n"; // add a \n but not after the last line
         }
         return s;
     }
 
     @Override
     public int getRows() {
-        // TODO Auto-generated method stub
         return rows;
     }
 
     @Override
     public int getCols() {
-        // TODO Auto-generated method stub
         return cols;
     }
 
@@ -110,8 +108,6 @@ public class LevelMap implements ILevelMap {
 
     @Override
     public ILevelCell getCell(int x, int y) {
-        // TODO Auto-generated method stub
-
         if (validCoords (x,y)) {
             return cells[y][x];
         } else {
@@ -131,17 +127,14 @@ public class LevelMap implements ILevelMap {
         this.cols = cols;
 
         // Make a new grid of LevelCells
-
         cells = new LevelCell[rows][cols];
 
         // Initialise each element of the grid to a new LevelCell
-
         for (int y=0;y<rows;y++) {
             for (int x=0;x<cols;x++) {
                 cells[y][x]= new LevelCell();
             }
         }
-
     }
 
 }

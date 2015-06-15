@@ -14,16 +14,16 @@ public class GameController implements SwipeInterface, GetMazeInfoCallback, HasM
     private MazeView myView;
     private IMaze myModel;
 
-    public GameController(){
-        this.myModel = new Maze("#######\n#.....#\n#--.--#\n#$-@$-#\n#.$$$.#\n#-----#\n#######\n", this);
+    public GameController(String mazeString){
+        this.myModel = new Maze(mazeString, this);
         //this.myView = new MazeView(context);
         //this.myView.invalidate();
         //this.myView.register(this);
     }
-    public GameController(MazeView myView){
+    public GameController(MazeView myView, String mazeString){
         this.myView = myView;
         //this.person = new Person(1,1);
-        this.myModel = new Maze("#######\n#.....#\n#--.--#\n#$-@$-#\n#.$$$.#\n#-----#\n#######\n", this);
+        this.myModel = new Maze(mazeString, this);
         //this.myView = new MazeView(context);
         this.myView.invalidate();
         this.myView.register(this);

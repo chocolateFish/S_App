@@ -1,27 +1,47 @@
 package sokoban.game.GameView;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import sokoban.filer.IFiler;
+import sokoban.filer.SharedPreferencesFiler;
 import sokoban.game.GameController;
-//import sokoban.game.GetMazeInfoCallback;
+import sokoban.mainView.LevelOptionsActivity;
 
-import android.view.Menu;
-import android.view.MenuItem;
+
+//import android.view.Menu;
+//import android.view.MenuItem;
+//import android.widget.TextView;
+
+//import com.example.user.mysokonabapplication.R;
 
 
 public class GameActivity extends AppCompatActivity {
     MazeView myMaze;
     GameController myController;
+    //public final static String EXTRA_MESSAGE = "SelectedLevelKey.MESSAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Create filer
+        //TODO - utltimately this will be recieved in intent
+        Context sokoContext = getApplicationContext();
+        IFiler sharedPrefFiler = new SharedPreferencesFiler(sokoContext);
 
-         myController = new GameController();
-        //GetMazeInfoCallback callback;
-        //callback = myGameController;
+        //get key from LevelOptions Activity
+        Intent intent = getIntent();
+        String key = intent.getStringExtra(LevelOptionsActivity.EXTRA_MESSAGE);
+        //load the selected Maze
+        if(key != null){
+            String mazeStr = sharedPrefFiler.loadMap(key);
+            myController = new GameController(mazeStr);
+        }  else{  //if there is no key, load the default maze
+            myController = new GameController("#######|#.....#|#--.--#|#$-@$-#|#.$$$.#|#-----#|#######|");
+        }
 
         myMaze = new MazeView(this, myController);
         myController.setView(myMaze);

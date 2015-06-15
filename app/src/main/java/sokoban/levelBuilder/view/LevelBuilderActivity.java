@@ -5,21 +5,21 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
+//import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.user.mysokonabapplication.R;
-
-import sokoban.StorageCallback;
+import sokoban.filer.IFiler;
+import sokoban.filer.SharedPreferencesFiler;
 import sokoban.levelBuilder.LevelBuilderController;
 import sokoban.mainView.LevelOptionsActivity;
 
 public class LevelBuilderActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     public final static String EXTRA_MESSAGE = "SelectedLevelKey.MESSAGE";
-    //using SahredPreferences for storing data
-    SharedPreferences sharedPref;
+    // class variable because it will ultimately be passes around using intent
+    private IFiler sharedPrefFiler;
     LevelBuilderController myController;
 
     @Override
@@ -28,10 +28,10 @@ public class LevelBuilderActivity extends AppCompatActivity implements SharedPre
         setContentView(R.layout.activity_level_builder);
         this.myController = new LevelBuilderController();
 
-        //using SahredPreferences for storing data
+        //Create filer
+        //TODO - utltimately this will be recieved in intent
         Context sokoContext = getApplicationContext();
-        this.sharedPref = sokoContext.getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        this.sharedPrefFiler = new SharedPreferencesFiler(sokoContext);
 
         Intent intent = getIntent();
         String key = intent.getStringExtra(LevelBuilderActivity.EXTRA_MESSAGE);
@@ -63,8 +63,7 @@ public class LevelBuilderActivity extends AppCompatActivity implements SharedPre
     }
     */
     private void loadSelected(String key){
-        String mazeZip = this.sharedPref.getString(key, "no such maze");
-        String maze = StorageCallback.getUnZippedString(mazeZip);
+        String maze = this.sharedPrefFiler.loadMap(key);
         EditText saveAsInput= (EditText) findViewById(R.id.saveAsInput);
         EditText saveLevelInput = (EditText) findViewById(R.id.saveLevelInput);
         saveAsInput.setText(key);
@@ -85,12 +84,8 @@ public class LevelBuilderActivity extends AppCompatActivity implements SharedPre
 
         //then get the string back out
         String maze = this.myController.levelToString();
-        //FileHandlerCallback- zip the string
-        String zippedMaze = StorageCallback.getZippedString(maze);
-        SharedPreferences.Editor editor  = sharedPref.edit();
-        editor.putString(key, zippedMaze);
-        editor.apply();
-       // editor.commit();
+        this.sharedPrefFiler.saveMap(maze, key);
+
 
         Intent intent = new Intent(this, LevelOptionsActivity.class);
         intent.putExtra(EXTRA_MESSAGE, key);
@@ -102,14 +97,8 @@ public class LevelBuilderActivity extends AppCompatActivity implements SharedPre
         //Get the Key
         EditText saveAsInput= (EditText) findViewById(R.id.saveAsInput);
         String key = saveAsInput.getText().toString();
-        CharSequence msgString;
-        if (this.sharedPref.contains(key)){
-            String existingMaze = StorageCallback.getUnZippedString(this.sharedPref.getString(key, "no such maze"));
-            msgString = existingMaze + " exists at key:" + key + "\nProceed to override, or use a different key";
+        CharSequence msgString = this.sharedPrefFiler.getKeyAvailability(key);
 
-        } else {
-            msgString ="Key is free.";
-        }
         Toast toast = Toast.makeText(this, msgString, Toast.LENGTH_LONG);
         toast.show();
     }

@@ -9,8 +9,6 @@
     <string name="check_key">Check Key</string>
     <string name="saveLevelBtn">Save Level</string>
     <string name="title_activity_level_selector">Select Level</string>
-    <string name="preference_file_key">AllMazes</string>
     <string name="title_activity_level_options">Level Options</string>
-    <string name="hello_world">Hello world!</string>
 
 </resources>

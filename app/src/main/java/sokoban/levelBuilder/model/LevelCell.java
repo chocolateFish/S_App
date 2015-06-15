@@ -25,19 +25,16 @@ class LevelCell implements ILevelCell {
 
     @Override
     public CellActor getActor() {
-        // TODO Auto-generated method stub
         return myActor;
     }
 
     @Override
     public CellBackground getBackground() {
-        // TODO Auto-generated method stub
         return myBackground;
     }
 
     @Override
     public void setActor(CellActor actor) {
-        // TODO Auto-generated method stub
         myActor = actor;
 
         enforceFlatness();
@@ -45,7 +42,6 @@ class LevelCell implements ILevelCell {
 
     @Override
     public void setBackground(CellBackground background) {
-        // TODO Auto-generated method stub
         myBackground = background;
         enforceFlatness();
 

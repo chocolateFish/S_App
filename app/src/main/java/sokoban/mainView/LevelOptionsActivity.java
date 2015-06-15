@@ -1,5 +1,6 @@
 package sokoban.mainView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,9 +11,15 @@ import android.widget.TextView;
 
 import com.example.user.mysokonabapplication.R;
 
+import sokoban.LevelSelector.LevelSelectorActivity;
+import sokoban.filer.IFiler;
+import sokoban.filer.SharedPreferencesFiler;
+import sokoban.game.GameView.GameActivity;
 import sokoban.levelBuilder.view.LevelBuilderActivity;
 
 public class LevelOptionsActivity extends AppCompatActivity {
+    //using SharedPreferences for storing data
+    IFiler sharedPrefFiler;
     public final static String EXTRA_MESSAGE = "SelectedLevelKey.MESSAGE";
     private String myKey;
 
@@ -26,6 +33,11 @@ public class LevelOptionsActivity extends AppCompatActivity {
         this.myKey = intent.getStringExtra(LevelBuilderActivity.EXTRA_MESSAGE);
         TextView selectedLevel =  (TextView) findViewById(R.id.selectedName);
         selectedLevel.setText(this.myKey);
+
+        //Create filer
+        //TODO - utltimately this will be recieved in intent
+        Context sokoContext = getApplicationContext();
+        this.sharedPrefFiler = new SharedPreferencesFiler(sokoContext);
     }
 
 
@@ -51,8 +63,21 @@ public class LevelOptionsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void doEditLevel(View view){
+    public void onClickEditLevel(View view){
         Intent intent = new Intent(this, LevelBuilderActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, this.myKey);
+        startActivity(intent);
+    }
+
+    public void onClickDeleteLevel(View view){
+        this.sharedPrefFiler.removeData(this.myKey);
+        this.myKey = null;
+        Intent intent = new Intent(this, LevelSelectorActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClickPlayLevel(View view){
+        Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra(EXTRA_MESSAGE, this.myKey);
         startActivity(intent);
     }

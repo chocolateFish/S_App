@@ -1,8 +1,5 @@
 package sokoban.levelBuilder;
 
-import sokoban.IFileHandlerCallback;
-import sokoban.filer.FileHandler;
-import sokoban.filer.IFiler;
 import sokoban.levelBuilder.model.ILevelMap;
 import sokoban.levelBuilder.model.LevelMap;
 

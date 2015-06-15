@@ -10,14 +10,11 @@ import sokoban.filer.IFiler;
 
 /**
  * Code by Filer Model group
- * - changed zip and unzip to static methods.
+ * - changed class to abstract class - added abstract methods
  */
-public class FileHandler implements IFiler {
-    private FileHandler(){
-        super();
-    }
+public abstract class FileHandler implements IFiler {
 
-    public static String zip(String map) {
+    public String zip(String map) {
         String zipMap = "";
         int count = 1;
         int i = 0;
@@ -48,7 +45,7 @@ public class FileHandler implements IFiler {
         return zipMap;
     }
 
-    public static String unZip(String zippedMap) {
+    public String unZip(String zippedMap) {
         String outputMap = "";
         String tempQty = "";
         char ch;
@@ -87,7 +84,7 @@ public class FileHandler implements IFiler {
         return outputMap;
     }
 
-    public  String importMap(String filePath) throws IOException {
+    public String importMap(String filePath) throws IOException {
         String outputMap = "";
         /*
         // read the file at the provided path
@@ -117,5 +114,10 @@ public class FileHandler implements IFiler {
             writer.write(map);
             writer.close();
     }
-
+    public abstract String loadMap(String key);
+    public abstract void saveMap(String map, String key);
+    public abstract String[] loadAll();
+    public abstract String getKeyAvailability(String key);
+    public abstract boolean containsData();
+    public abstract void removeData(String key);
 }

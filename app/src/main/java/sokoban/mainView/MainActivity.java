@@ -1,6 +1,8 @@
 package sokoban.mainView;
 
+import android.content.Context;
 import android.content.Intent;
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -10,14 +12,28 @@ import android.view.View;
 import com.example.user.mysokonabapplication.R;
 
 import sokoban.LevelSelector.LevelSelectorActivity;
+import sokoban.filer.IFiler;
+import sokoban.filer.SharedPreferencesFiler;
 import sokoban.levelBuilder.view.LevelBuilderActivity;
 
 public class MainActivity extends AppCompatActivity {
+    // class variable because it will ultimately be passes around using intent
+    private IFiler sharedPrefFiler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Context sokoContext = getApplicationContext();
+        this.sharedPrefFiler = new SharedPreferencesFiler(sokoContext);
+       // Button gameBtn = (Button) findViewById(R.id.gameBtn);
+       // Button levelSelector = (Button) findViewById(R.id.levelSelectorBtn);
+        if(this.sharedPrefFiler.containsData()){
+            //gameBtn.setVisibility(View.VISIBLE);
+            findViewById(R.id.gameBtn).setVisibility(View.VISIBLE);
+            findViewById(R.id.levelSelectorBtn).setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

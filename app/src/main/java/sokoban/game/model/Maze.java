@@ -8,7 +8,7 @@ import sokoban.game.BlockTypes;
 import sokoban.game.HasMovedCallback;
 
 public class Maze implements IMaze {
-    //TODO
+    //TODO - change callback to getspecific values/ positions. only redraw those.
     HasMovedCallback hasMovedCallback;
 	List<IPosition> allPositions;
 	private int height;
@@ -34,6 +34,7 @@ public class Maze implements IMaze {
 	}
 
 	private void setHeightWidthFromStr(String mazeString) {
+
 		int size = mazeString.replace("\n", "").length();
 		int width = mazeString.indexOf("\n");
 		int height = size / width;
@@ -94,7 +95,7 @@ public class Maze implements IMaze {
 		int across = 0;
 		for (int index = 0; index < mazeStr.length(); index++) {
 			Character theChar = mazeStr.charAt(index);
-			if (theChar.equals('\n') == false && across != this.width) {
+			if (!theChar.equals('\n') && across != this.width) {
 				this.addPostion(theChar, across, down);
 				across++;
 
