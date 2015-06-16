@@ -7,24 +7,23 @@ import java.util.Map;
 
 public class SharedPreferencesFiler extends FileHandler {
     private static SharedPreferences sharedPref;
-    private static final String PREFERENCE_FILE_KEY = "AllMazes";
+    private static final String PREFERENCE_NAME = "AllMazes";
 
     public SharedPreferencesFiler(Context sokoContext){
         super();
         sharedPref = sokoContext.getSharedPreferences(
-                SharedPreferencesFiler.PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
+                SharedPreferencesFiler.PREFERENCE_NAME, Context.MODE_PRIVATE);
     }
 
     @Override
-      public String loadMap(String key) {
+      public String importMap(String key) {
         String defaultMaze = "#######|#.....#|#--.--#|#$-@$-#|#.$$$.#|#-----#|#######|";
         String zippedStr = sharedPref.getString(key, defaultMaze);
         return this.unZip(zippedStr);
-
     }
 
     @Override
-    public void saveMap(String map, String key){
+    public void exportMap(String map, String key){
         String zippedMaze = this.zip(map);
         SharedPreferences.Editor editor  = sharedPref.edit();
         editor.putString(key, zippedMaze);
@@ -47,7 +46,7 @@ public class SharedPreferencesFiler extends FileHandler {
     public String getKeyAvailability(String key){
         String msgString;
         if (sharedPref.contains(key)){
-            String existingMaze = this.loadMap(key);
+            String existingMaze = this.importMap(key);
             msgString = existingMaze + " exists at key: " + key + "\n Proceed to override, or use a different key";
 
         } else {

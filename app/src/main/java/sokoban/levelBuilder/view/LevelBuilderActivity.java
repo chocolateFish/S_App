@@ -63,7 +63,7 @@ public class LevelBuilderActivity extends AppCompatActivity implements SharedPre
     }
     */
     private void loadSelected(String key){
-        String maze = this.sharedPrefFiler.loadMap(key);
+        String maze = this.sharedPrefFiler.importMap(key);
         EditText saveAsInput= (EditText) findViewById(R.id.saveAsInput);
         EditText saveLevelInput = (EditText) findViewById(R.id.saveLevelInput);
         saveAsInput.setText(key);
@@ -84,7 +84,7 @@ public class LevelBuilderActivity extends AppCompatActivity implements SharedPre
 
         //then get the string back out
         String maze = this.myController.levelToString();
-        this.sharedPrefFiler.saveMap(maze, key);
+        this.sharedPrefFiler.exportMap(maze, key);
 
 
         Intent intent = new Intent(this, LevelOptionsActivity.class);

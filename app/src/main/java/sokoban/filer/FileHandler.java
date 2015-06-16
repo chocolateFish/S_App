@@ -10,9 +10,9 @@ import sokoban.filer.IFiler;
 
 /**
  * Code by Filer Model group
- * - changed class to abstract class - added abstract methods
+ *
  */
-public abstract class FileHandler implements IFiler {
+public abstract class FileHandler implements IFiler{
 
     public String zip(String map) {
         String zipMap = "";
@@ -69,7 +69,7 @@ public abstract class FileHandler implements IFiler {
                     ch = zippedMap.charAt(i+1);
 
                     i++;
-                };
+                }
                 // quantity represents the number that was before the tile identifier
                 qty = Integer.parseInt(tempQty);
                 // add the provided amount of tiles to the output map
@@ -83,41 +83,34 @@ public abstract class FileHandler implements IFiler {
         }
         return outputMap;
     }
-
+/*
     public String importMap(String filePath) throws IOException {
         String outputMap = "";
-        /*
+        *//*
         // read the file at the provided path
-        try (Scanner scan =  new Scanner( new File(filePath) )) {
+        //try (Scanner scan =  new Scanner( new File(filePath) )) {
+         Scanner scan =  new Scanner( new File(filePath) );
             // this assumes that there is only 1 string in the file
             outputMap = scan.useDelimiter("\\Z").next();
             scan.close();
-        }
-        */
-
-        // read the file at the provided path
-        Scanner scan =  new Scanner( new File(filePath) );
-            // this assumes that there is only 1 string in the file
-            outputMap = scan.useDelimiter("\\Z").next();
-            scan.close();
-        return outputMap;
+        //}
+         return outputMap;
     }
-
-    public void exportMap(String map, String fileName) throws IOException {
-       /*
-       try (BufferedWriter  writer = new BufferedWriter ( new FileWriter(fileName) )) {
+*/
+   /* public void exportMap(String map, String fileName) throws IOException {
+       BufferedWriter writer = new BufferedWriter ( new FileWriter(fileName) );
+       //try (BufferedWriter  writer = new BufferedWriter ( new FileWriter(fileName) )) {
             writer.write(map);
             writer.close();
-        }
-        */
-        BufferedWriter writer = new BufferedWriter ( new FileWriter(fileName) );
-            writer.write(map);
-            writer.close();
+       // }
     }
-    public abstract String loadMap(String key);
-    public abstract void saveMap(String map, String key);
+    */
+
+    public abstract String importMap(String key);
+    public abstract void exportMap(String map, String key);
     public abstract String[] loadAll();
     public abstract String getKeyAvailability(String key);
     public abstract boolean containsData();
     public abstract void removeData(String key);
+
 }

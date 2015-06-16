@@ -37,7 +37,7 @@ public class GameActivity extends AppCompatActivity {
         String key = intent.getStringExtra(LevelOptionsActivity.EXTRA_MESSAGE);
         //load the selected Maze
         if(key != null){
-            String mazeStr = sharedPrefFiler.loadMap(key);
+            String mazeStr = sharedPrefFiler.importMap(key);
             myController = new GameController(mazeStr);
         }  else{  //if there is no key, load the default maze
             myController = new GameController("#######|#.....#|#--.--#|#$-@$-#|#.$$$.#|#-----#|#######|");

@@ -31,7 +31,7 @@ public class LevelSelectorActivity extends AppCompatActivity {
     public void displayAll(){
         StringBuilder sb = new StringBuilder();
         for (String key : this.allKeys){
-            String value = this.sharedPrefFiler.loadMap(key);
+            String value = this.sharedPrefFiler.importMap(key);
             sb.append(key).append(" - ").append(value).append('\n');
         }
         TextView allMazesText = (TextView) findViewById(R.id.allMazesText);
