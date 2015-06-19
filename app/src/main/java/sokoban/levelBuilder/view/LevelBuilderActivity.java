@@ -16,7 +16,7 @@ import sokoban.filer.SharedPreferencesFiler;
 import sokoban.levelBuilder.LevelBuilderController;
 import sokoban.mainView.LevelOptionsActivity;
 
-public class LevelBuilderActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class LevelBuilderActivity extends AppCompatActivity{
     public final static String EXTRA_MESSAGE = "SelectedLevelKey.MESSAGE";
     // class variable because it will ultimately be passes around using intent
     private IFiler sharedPrefFiler;
@@ -101,10 +101,5 @@ public class LevelBuilderActivity extends AppCompatActivity implements SharedPre
 
         Toast toast = Toast.makeText(this, msgString, Toast.LENGTH_LONG);
         toast.show();
-    }
-
-    public void	onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key){
-        //do view. - append text
-
     }
 }

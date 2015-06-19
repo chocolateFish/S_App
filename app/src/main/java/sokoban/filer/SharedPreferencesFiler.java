@@ -3,7 +3,11 @@ package sokoban.filer;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.Arrays;
 import java.util.Map;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class SharedPreferencesFiler extends FileHandler {
     private static SharedPreferences sharedPref;
@@ -32,14 +36,17 @@ public class SharedPreferencesFiler extends FileHandler {
     }
 
     public String[] loadAll(){
-        Map<String, ?> allMazes = sharedPref.getAll();
-        int totalMazes = allMazes.size();
-        String[] allKeys = new String[totalMazes];
-        int position = 0;
-        for (Map.Entry<String, ?> e : allMazes.entrySet()){
-            allKeys[position] = e.getKey();
-            position ++;
-        }
+        Set<String> allKeysSet = sharedPref.getAll().keySet();
+        String[] allKeys = new String[allKeysSet.size()];
+        allKeys = allKeysSet.toArray(allKeys);
+
+        //String[] allKeys = new String[totalMazes];
+        //int position = 0;
+        //for (Map.Entry<String, ?> e : allMazes.entrySet()){
+        //    allKeys[position] = e.getKey();
+        //    position ++;
+        //}
+        Arrays.sort(allKeys);
         return allKeys;
     }
 
