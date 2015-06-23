@@ -1,25 +1,12 @@
 package sokoban.mainView;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.content.Intent;
 
-import android.net.Uri;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-
-
 import com.example.user.mysokonabapplication.R;
 
-import sokoban.LevelSelector.LevelSelectorActivity;
-import sokoban.levelBuilder.view.LevelBuilderActivity;
-
-public class MainActivity extends AppCompatActivity implements MenuFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,25 +21,6 @@ public class MainActivity extends AppCompatActivity implements MenuFragment.OnFr
     @Override
     protected void onStop() {
         super.onStop();  // Always call the superclass method first
-    }
-
-/*
-    public void goToLevelBuilder(View view) {
-        Intent intent = new Intent(this, LevelBuilderActivity.class);
-        startActivity(intent);
-
-    }
-
-    public void goToLevelSelector(View view){
-        Intent intent = new Intent(this, LevelSelectorActivity.class);
-        startActivity(intent);
-    }
-    */
-
-
-
-        public void onFragmentInteraction(Uri uri){
-            //
     }
 
 }
