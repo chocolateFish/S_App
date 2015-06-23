@@ -4,24 +4,22 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.Arrays;
-import java.util.Map;
 import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
+
 
 public class SharedPreferencesFiler extends FileHandler {
     private static SharedPreferences sharedPref;
     private static final String PREFERENCE_NAME = "AllMazes";
 
-    public SharedPreferencesFiler(Context sokoContext){
+    public SharedPreferencesFiler(Context mContext){
         super();
-        sharedPref = sokoContext.getSharedPreferences(
+        sharedPref = mContext.getSharedPreferences(
                 SharedPreferencesFiler.PREFERENCE_NAME, Context.MODE_PRIVATE);
     }
 
     @Override
       public String importMap(String key) {
-        String defaultMaze = "#######|#.....#|#--.--#|#$-@$-#|#.$$$.#|#-----#|#######|";
+        String defaultMaze = "#######\n#.....#\n#--.--#\n#$-@$-#\n#.$$$.#\n#-----#\n#######\n";
         String zippedStr = sharedPref.getString(key, defaultMaze);
         return this.unZip(zippedStr);
     }
@@ -51,15 +49,13 @@ public class SharedPreferencesFiler extends FileHandler {
     }
 
     public String getKeyAvailability(String key){
-        String msgString;
         if (sharedPref.contains(key)){
             String existingMaze = this.importMap(key);
-            msgString = existingMaze + " exists at key: " + key + "\n Proceed to override, or use a different key";
-
+            return existingMaze + " exists at key: " + key + "\n Proceed to override, or use a different key";
         } else {
-            msgString ="Key is free.";
+            return "Key is free.";
         }
-        return msgString;
+
     }
 
     public boolean containsData(){

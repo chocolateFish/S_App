@@ -17,14 +17,14 @@ public class Maze implements IMaze {
 
 	Maze(int width, int height) {
 		this.set(width, height);
-		this.allPositions = new ArrayList<IPosition>();
+		this.allPositions = new ArrayList<>();
 	}
 
 	// constructor is public so it can be accessed by tests.
 	public Maze(String mazeStr, HasMovedCallback callback) {
         this.hasMovedCallback = callback;
 		this.setHeightWidthFromStr(mazeStr);
-		this.allPositions = new ArrayList<IPosition>();
+		this.allPositions = new ArrayList<>();
 		this.addAllPositions(mazeStr);
 	}
 

@@ -1,12 +1,13 @@
 package sokoban.levelBuilder.view;
 
-import android.content.Context;
+
+
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 //import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,7 +19,7 @@ import sokoban.mainView.LevelOptionsActivity;
 
 public class LevelBuilderActivity extends AppCompatActivity{
     public final static String EXTRA_MESSAGE = "SelectedLevelKey.MESSAGE";
-    // class variable because it will ultimately be passes around using intent
+
     private IFiler sharedPrefFiler;
     LevelBuilderController myController;
 
@@ -29,15 +30,46 @@ public class LevelBuilderActivity extends AppCompatActivity{
         this.myController = new LevelBuilderController();
 
         //Create filer
-        //TODO - utltimately this will be recieved in intent
-        Context sokoContext = getApplicationContext();
-        this.sharedPrefFiler = new SharedPreferencesFiler(sokoContext);
+        this.sharedPrefFiler = new SharedPreferencesFiler(this);
 
         Intent intent = getIntent();
         String key = intent.getStringExtra(LevelBuilderActivity.EXTRA_MESSAGE);
         if (key != null) {
-            this.loadSelected(key);
+            String maze = this.sharedPrefFiler.importMap(key);
+            EditText saveAsInput= (EditText) findViewById(R.id.saveAsInput);
+            EditText saveLevelInput = (EditText) findViewById(R.id.saveLevelInput);
+            saveAsInput.setText(key);
+            saveLevelInput.setText(maze);
         }
+
+        //replace this with an onfocus changed listenr on the tes=xt view
+        final Button checkKeyBtn = (Button) findViewById(R.id.checkKeyBtn);
+        checkKeyBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                LevelBuilderActivity.this.checkKey();
+            }
+        });
+
+
+        final Button saveLevelBtn = (Button) findViewById(R.id.saveLevelBtn);
+        saveLevelBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                LevelBuilderActivity.this.saveLevelToKey();
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();  // Always call the superclass method first
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();  // Always call the superclass method first
     }
 
    /*
@@ -62,15 +94,8 @@ public class LevelBuilderActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
     */
-    private void loadSelected(String key){
-        String maze = this.sharedPrefFiler.importMap(key);
-        EditText saveAsInput= (EditText) findViewById(R.id.saveAsInput);
-        EditText saveLevelInput = (EditText) findViewById(R.id.saveLevelInput);
-        saveAsInput.setText(key);
-        saveLevelInput.setText(maze);
-    }
 
-    public void saveLevelToKey(View view) {
+    private void saveLevelToKey() {
         //Get the Key
         EditText saveAsInput= (EditText) findViewById(R.id.saveAsInput);
         String key = saveAsInput.getText().toString();
@@ -93,7 +118,7 @@ public class LevelBuilderActivity extends AppCompatActivity{
     }
 
     //ideally this would be in a TextWatcher listener - not attached to button.
-    public void checkKey(View view ){
+    private void checkKey(){
         //Get the Key
         EditText saveAsInput= (EditText) findViewById(R.id.saveAsInput);
         String key = saveAsInput.getText().toString();
@@ -102,4 +127,5 @@ public class LevelBuilderActivity extends AppCompatActivity{
         Toast toast = Toast.makeText(this, msgString, Toast.LENGTH_LONG);
         toast.show();
     }
+
 }

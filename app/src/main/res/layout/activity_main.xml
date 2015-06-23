@@ -4,44 +4,28 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:marginBottom="@dimen/activity_vertical_margin"
     tools:context="sokoban.mainView.MainActivity"
     >
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Level Bulder"
-        android:id="@+id/levelBuilderBtn"
-        android:layout_marginBottom="50dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_centerInParent="true"
-        android:onClick="goToLevelBuilder"
-        />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="Game"
         android:id="@+id/gameBtn"
-        android:layout_below="@+id/levelBuilderBtn"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="70dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_centerHorizontal="true"
-        android:visibility="invisible" />
+       />
 
-    <Button
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Level Selector"
-        android:id="@+id/levelSelectorBtn"
+        android:id="@+id/menu_container"
         android:layout_below="@+id/gameBtn"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
         android:layout_centerHorizontal="true"
-        android:onClick="goToLevelSelector"
-        android:visibility="invisible" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp" />
+
 </RelativeLayout>

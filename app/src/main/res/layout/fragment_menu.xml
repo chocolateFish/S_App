@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="sokoban.mainView.MenuFragment"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:id="@+id/fragmentParentViewGroup">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Level Bulder"
+        android:id="@+id/levelBuilderBtn"
+        android:visibility="invisible"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Level Selector"
+        android:id ="@+id/levelSelectorBtn"
+        android:visibility="invisible" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Exit"
+        android:id="@+id/exitBtn"
+        android:visibility="invisible"
+        />
+</LinearLayout>

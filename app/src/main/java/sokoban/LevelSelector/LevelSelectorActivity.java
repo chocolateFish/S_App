@@ -24,6 +24,11 @@ public class LevelSelectorActivity extends AppCompatActivity {
 
         //Create filer
         IFiler sharedPrefFiler = new SharedPreferencesFiler(this);
+        //make sure theere is always at least one Maze in preferences
+        if(!sharedPrefFiler.containsData()){
+            sharedPrefFiler.exportMap("#######\n#.....#\n#--.--#\n#$-@$-#\n#.$$$.#\n#-----#\n#######\n","01 Maze");
+        }
+
         String [] allKeys = sharedPrefFiler.loadAll();
 
         setContentView(R.layout.activity_level_selector);
@@ -44,18 +49,5 @@ public class LevelSelectorActivity extends AppCompatActivity {
             }
         });
     }
-
-
-   /* public void displayAll(){
-        StringBuilder sb = new StringBuilder();
-        for (String key : this.allKeys){
-            String value = this.sharedPrefFiler.importMap(key);
-            sb.append(key).append(" - ").append(value).append('\n');
-        }
-        TextView allMazesText = (TextView) findViewById(R.id.allMazesText);
-        CharSequence displayTxt = sb.toString();
-        allMazesText.setText(displayTxt);
-    }
-    */
 
 }

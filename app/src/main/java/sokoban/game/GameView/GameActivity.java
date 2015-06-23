@@ -20,28 +20,28 @@ import sokoban.mainView.LevelOptionsActivity;
 
 
 public class GameActivity extends AppCompatActivity {
-    MazeView myMaze;
-    GameController myController;
-    //public final static String EXTRA_MESSAGE = "SelectedLevelKey.MESSAGE";
+        MazeView myMaze;
+        GameController myController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Create filer
         //TODO - utltimately this will be recieved in intent
-        Context sokoContext = getApplicationContext();
-        IFiler sharedPrefFiler = new SharedPreferencesFiler(sokoContext);
+        IFiler sharedPrefFiler = new SharedPreferencesFiler(this);
 
         //get key from LevelOptions Activity
         Intent intent = getIntent();
         String key = intent.getStringExtra(LevelOptionsActivity.EXTRA_MESSAGE);
         //load the selected Maze
+        String mazeStr;
         if(key != null){
-            String mazeStr = sharedPrefFiler.importMap(key);
-            myController = new GameController(mazeStr);
+            mazeStr = sharedPrefFiler.importMap(key);
+
         }  else{  //if there is no key, load the default maze
-            myController = new GameController("#######|#.....#|#--.--#|#$-@$-#|#.$$$.#|#-----#|#######|");
+            mazeStr = sharedPrefFiler.importMap("01 Maze");
         }
+        myController = new GameController(mazeStr);
 
         myMaze = new MazeView(this, myController);
         myController.setView(myMaze);
