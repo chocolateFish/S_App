@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity implements MenuFragment.OnMe
         setContentView(R.layout.activity_main);
         // Begin the transaction
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.add(R.id.menu_container, MenuFragment.newInstance(true, true, false));
+        ft.add(R.id.menu_container, MenuFragment.newInstance(true, true, false, false , false));
         ft.commit();
     }
 
@@ -23,7 +23,11 @@ public class MainActivity extends AppCompatActivity implements MenuFragment.OnMe
     protected void onStop() {
         super.onStop();  // Always call the superclass method first
     }
-    public void onMenuItemSelected(int action){
 
-    };
+    public void deleteMap(){
+        //
+    }
+    public String getMapKey (){
+        return "";
+    }
 }
