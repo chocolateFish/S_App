@@ -20,6 +20,14 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
+            android:name="sokoban.LevelSelector.LevelSelectorActivity"
+            android:label="@string/title_activity_level_selector">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+       <!-- <activity
             android:name="sokoban.mainView.MainActivity"
             android:label="@string/title_activity_main" >
             <intent-filter>
@@ -27,31 +35,31 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity>-->
         <activity
             android:name="sokoban.game.GameView.GameActivity"
             android:label="@string/title_activity_game"
-            android:parentActivityName="sokoban.mainView.MainActivity" >
+            android:parentActivityName="sokoban.LevelSelector.LevelSelectorActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="sokoban.mainView.MainActivity" />
+                android:value="sokoban.LevelSelector.LevelSelectorActivity" />
         </activity>
         <activity
             android:name="sokoban.levelBuilder.view.LevelBuilderActivity"
             android:label="@string/title_activity_filer"
-            android:parentActivityName="sokoban.mainView.MainActivity" >
+            android:parentActivityName="sokoban.LevelSelector.LevelSelectorActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="sokoban.mainView.MainActivity" />
+                android:value="sokoban.LevelSelector.LevelSelectorActivity" />
         </activity>
-        <activity
+        <!--<activity
             android:name="sokoban.LevelSelector.LevelSelectorActivity"
             android:label="@string/title_activity_level_selector"
             android:parentActivityName="sokoban.mainView.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="sokoban.mainView.MainActivity" />
-        </activity>
+        </activity>-->
         <activity
             android:name="sokoban.mainView.LevelOptionsActivity"
             android:label="@string/title_activity_level_options"

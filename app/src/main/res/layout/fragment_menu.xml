@@ -26,4 +26,17 @@
         android:id ="@+id/levelSelectorBtn"
         android:visibility="gone" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:id ="@+id/editBtn"
+        android:visibility="gone" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:id ="@+id/deleteBtn"
+        android:visibility="visible" />
+
 </LinearLayout>
