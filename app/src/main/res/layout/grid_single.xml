@@ -13,13 +13,13 @@
         android:textStyle="bold"
         android:typeface="normal"
         android:textSize="14sp"
-        android:textIsSelectable="false"
         android:text="&quot;Test Text&quot;"
         android:background="@drawable/grid_single_bkgrnd"
         android:gravity="center_vertical|center_horizontal"
         android:layout_weight="1"
         android:ellipsize="none"
-        android:layout_margin="3dp">
+        android:layout_margin="3dp"
+        >
     </TextView>
 
 </LinearLayout>

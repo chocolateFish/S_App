@@ -2,11 +2,12 @@ package sokoban.mainView;
 
 
 import android.app.FragmentTransaction;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import com.example.user.mysokonabapplication.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MenuFragment.OnMenuInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,5 +23,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();  // Always call the superclass method first
     }
+    public void onMenuItemSelected(int action){
 
+    };
 }

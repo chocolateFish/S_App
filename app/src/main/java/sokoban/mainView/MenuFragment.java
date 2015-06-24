@@ -2,6 +2,7 @@ package sokoban.mainView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,31 +22,35 @@ import sokoban.levelBuilder.view.LevelBuilderActivity;
  * create an instance of this fragment.
  */
 public class MenuFragment extends Fragment implements Button.OnClickListener {
+    //public static final int DELETE = 0;
+    public static final int PLAY = 1;
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "buildLevelBtnVisible";
-    private static final String ARG_PARAM2 = "selectLevelBtnVisible";
-    private static final String ARG_PARAM3 = "exitBtnVisible";
+    private static final String ARG_PARAM1 = "designBtnVisible";
+    private static final String ARG_PARAM2 = "selectBtnVisible";
+    private static final String ARG_PARAM3 = "playBtnVisible";
 
-    private boolean buildLevelBtnVisible;
-    private boolean selectLevelBtnVisible;
-    private boolean exitBtnVisible;
+    private boolean designBtnVisible;
+    private boolean selectBtnVisible;
+    private boolean playBtnVisible;
 
+    private OnMenuInteractionListener myListener;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param isBuilderBtnVisible Parameter 1.
-     * @param isSelectorBtnVisible Parameter 2.
-     * @param isExitBtnVisible Parameter 3.
+     * @param isDesignBtnVisible Parameter 1.
+     * @param isSelectBtnVisible Parameter 2..
+     * @param isPlayBtnVisible Parameter 3.
      * @return A new instance of fragment MenuFragment.
      */
-    public static MenuFragment newInstance(Boolean isBuilderBtnVisible, Boolean isSelectorBtnVisible, Boolean isExitBtnVisible) {
+    public static MenuFragment newInstance(Boolean isDesignBtnVisible, Boolean isSelectBtnVisible,
+                                           Boolean isPlayBtnVisible) {
         MenuFragment fragment = new MenuFragment();
         Bundle args = new Bundle();
-        args.putBoolean(ARG_PARAM1, isBuilderBtnVisible);
-        args.putBoolean(ARG_PARAM2, isSelectorBtnVisible);
-        args.putBoolean(ARG_PARAM3, isExitBtnVisible);
+        args.putBoolean(ARG_PARAM1, isDesignBtnVisible);
+        args.putBoolean(ARG_PARAM2, isSelectBtnVisible);
+        args.putBoolean(ARG_PARAM3, isPlayBtnVisible);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,9 +63,9 @@ public class MenuFragment extends Fragment implements Button.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            buildLevelBtnVisible = getArguments().getBoolean(ARG_PARAM1);
-            selectLevelBtnVisible = getArguments().getBoolean(ARG_PARAM2);
-            exitBtnVisible = getArguments().getBoolean(ARG_PARAM3);
+            designBtnVisible = getArguments().getBoolean(ARG_PARAM1);
+            selectBtnVisible = getArguments().getBoolean(ARG_PARAM2);
+            playBtnVisible = getArguments().getBoolean(ARG_PARAM3);
         }
     }
 
@@ -71,21 +76,21 @@ public class MenuFragment extends Fragment implements Button.OnClickListener {
         View rootView = inflater.inflate(R.layout.fragment_menu, container, false);
 
         //Hide /show buttons based on parameters - not sure if this is the robust way of doing this
-        if (buildLevelBtnVisible) {
+        if (designBtnVisible) {
             Button levelBuilderBtn = (Button) rootView.findViewById(R.id.levelBuilderBtn);
             levelBuilderBtn.setVisibility(View.VISIBLE);
             levelBuilderBtn.setOnClickListener(this);
         }
-        if (selectLevelBtnVisible) {
+        if (selectBtnVisible) {
             Button levelSelectorBtn = (Button) rootView.findViewById(R.id.levelSelectorBtn);
             levelSelectorBtn.setVisibility(View.VISIBLE);
             levelSelectorBtn.setOnClickListener(this);
         }
 
-        if (exitBtnVisible) {
-            Button exitBtn = (Button) rootView.findViewById(R.id.exitBtn);
-            exitBtn.setVisibility(View.VISIBLE);
-            exitBtn.setOnClickListener(this);
+        if (playBtnVisible) {
+            Button playBtn = (Button) rootView.findViewById(R.id.playBtn);
+            playBtn.setVisibility(View.VISIBLE);
+            playBtn.setOnClickListener(this);
         }
 
         return rootView;
@@ -94,11 +99,17 @@ public class MenuFragment extends Fragment implements Button.OnClickListener {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        try {
+            myListener = (OnMenuInteractionListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnArticleSelectedListener");
+        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        myListener = null;
     }
 
     public void onClick(View view){
@@ -106,15 +117,19 @@ public class MenuFragment extends Fragment implements Button.OnClickListener {
             case R.id.levelBuilderBtn:
                 Intent builderIntent = new Intent(this.getActivity(), LevelBuilderActivity.class);
                 startActivity(builderIntent);
-
                 break;
-            case R.id.levelSelectorBtn:
+            case R.id.levelSelectorBtn: default:
                 Intent selectorIntent = new Intent(this.getActivity(), LevelSelectorActivity.class);
                 startActivity(selectorIntent);
                 break;
-            case R.id.exitBtn:
-                //
+            case R.id.playBtn:
+               myListener.onMenuItemSelected(MenuFragment.PLAY);
                 break;
         }
+    }
+
+    // Container Activity must implement this interface
+    public interface OnMenuInteractionListener {
+       void onMenuItemSelected(int action);
     }
 }
