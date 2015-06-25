@@ -3,21 +3,20 @@ package sokoban.levelBuilder.view;
 
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-//import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.user.mysokonabapplication.R;
+
+import sokoban.LevelSelector.LevelSelectorActivity;
 import sokoban.filer.IFiler;
 import sokoban.filer.SharedPreferencesFiler;
 import sokoban.levelBuilder.LevelBuilderController;
-import sokoban.mainView.LevelOptionsActivity;
-import sokoban.mainView.MenuFragment;
+
 
 public class LevelBuilderActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "SelectedLevelKey.MESSAGE";
@@ -35,7 +34,7 @@ public class LevelBuilderActivity extends AppCompatActivity {
         this.sharedPrefFiler = new SharedPreferencesFiler(this);
 
         Intent intent = getIntent();
-        String key = intent.getStringExtra(LevelBuilderActivity.EXTRA_MESSAGE);
+        String key = intent.getStringExtra(LevelSelectorActivity.EXTRA_MESSAGE);
         if (key != null) {
             String maze = this.sharedPrefFiler.importMap(key);
             EditText saveAsInput= (EditText) findViewById(R.id.saveAsInput);
@@ -74,29 +73,6 @@ public class LevelBuilderActivity extends AppCompatActivity {
         super.onStart();  // Always call the superclass method first
     }
 
-   /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-    */
-
     private void saveLevelToKey() {
         //Get the Key
         EditText saveAsInput= (EditText) findViewById(R.id.saveAsInput);
@@ -114,7 +90,7 @@ public class LevelBuilderActivity extends AppCompatActivity {
         this.sharedPrefFiler.exportMap(maze, key);
 
 
-        Intent intent = new Intent(this, LevelOptionsActivity.class);
+        Intent intent = new Intent(this, LevelSelectorActivity.class);
         intent.putExtra(EXTRA_MESSAGE, key);
         startActivity(intent);
     }

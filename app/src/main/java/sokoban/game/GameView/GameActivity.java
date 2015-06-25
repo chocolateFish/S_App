@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import sokoban.LevelSelector.LevelSelectorActivity;
 import sokoban.filer.IFiler;
 import sokoban.filer.SharedPreferencesFiler;
 import sokoban.game.GameController;
-import sokoban.mainView.LevelOptionsActivity;
 
 
 //import android.view.Menu;
@@ -32,7 +32,7 @@ public class GameActivity extends AppCompatActivity {
 
         //get key from LevelOptions Activity
         Intent intent = getIntent();
-        String key = intent.getStringExtra(LevelOptionsActivity.EXTRA_MESSAGE);
+        String key = intent.getStringExtra(LevelSelectorActivity.EXTRA_MESSAGE);
         //load the selected Maze
         String mazeStr;
         if(key != null){

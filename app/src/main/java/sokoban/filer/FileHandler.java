@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import sokoban.filer.IFiler;
@@ -108,7 +110,7 @@ public abstract class FileHandler implements IFiler{
 
     public abstract String importMap(String key);
     public abstract void exportMap(String map, String key);
-    public abstract String[] loadAll();
+    public abstract List<String> loadAll();
     public abstract String getKeyAvailability(String key);
     public abstract boolean containsData();
     public abstract void removeData(String key);

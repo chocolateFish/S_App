@@ -3,7 +3,10 @@ package sokoban.filer;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 
@@ -33,19 +36,9 @@ public class SharedPreferencesFiler extends FileHandler {
         // editor.commit();
     }
 
-    public String[] loadAll(){
+    public List<String> loadAll(){
         Set<String> allKeysSet = sharedPref.getAll().keySet();
-        String[] allKeys = new String[allKeysSet.size()];
-        allKeys = allKeysSet.toArray(allKeys);
-
-        //String[] allKeys = new String[totalMazes];
-        //int position = 0;
-        //for (Map.Entry<String, ?> e : allMazes.entrySet()){
-        //    allKeys[position] = e.getKey();
-        //    position ++;
-        //}
-        Arrays.sort(allKeys);
-        return allKeys;
+        return new ArrayList<String>(allKeysSet);
     }
 
     public String getKeyAvailability(String key){
@@ -67,4 +60,8 @@ public class SharedPreferencesFiler extends FileHandler {
         editor.remove(key);
         editor.apply();
     }
+
+
+
+
 }

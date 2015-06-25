@@ -2,27 +2,31 @@ package sokoban.LevelSelector;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Adapter;
+
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 
 import com.example.user.mysokonabapplication.R;
+
+import java.util.List;
+
 import sokoban.filer.IFiler;
 import sokoban.filer.SharedPreferencesFiler;
-import sokoban.game.GameView.GameActivity;
-import sokoban.levelBuilder.view.LevelBuilderActivity;
-import sokoban.mainView.LevelOptionsActivity;
-import sokoban.mainView.MenuFragment;
+import sokoban.MenuFragment;
 
 public class LevelSelectorActivity extends AppCompatActivity implements MenuFragment.OnMenuInteractionListener{
     public final static String EXTRA_MESSAGE = "SelectedLevelKey.MESSAGE";
+    private GridView gridview;
     private String selectedKey;
+    private int selectedPos;
    // IFiler sharedPrefFiler;
-    //String[] allKeys;
+   List<String> allKeys;
 
     //TODO fix bug - what if no item is selected?
 
@@ -31,24 +35,23 @@ public class LevelSelectorActivity extends AppCompatActivity implements MenuFrag
         super.onCreate(savedInstanceState);
         //Create filer
         IFiler sharedPrefFiler = new SharedPreferencesFiler(this);
-        //make sure theere is always at least one Maze in preferences
+        //make sure there is always at least one Maze in preferences
         if(!sharedPrefFiler.containsData()){
             sharedPrefFiler.exportMap("#######\n#.....#\n#--.--#\n#$-@$-#\n#.$$$.#\n#-----#\n#######\n","01 Maze");
         }
 
-        String [] allKeys = sharedPrefFiler.loadAll();
+        allKeys = sharedPrefFiler.loadAll();
         setContentView(R.layout.activity_level_selector);
-
-        final GridView gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setAdapter(new CustomGrid(this, allKeys));
-
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                R.layout.map_item, allKeys);
+        adapter.sort(String.CASE_INSENSITIVE_ORDER);
+        gridview = (GridView) findViewById(R.id.gridview);
+        gridview.setAdapter(adapter);
+        gridview.setOnItemClickListener(new OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Adapter myAdapter = parent.getAdapter();
-                LevelSelectorActivity.this.selectedKey = myAdapter.getItem(position).toString();
-            }
+                LevelSelectorActivity.this.selectMap(position);}
         });
 
         // Begin the transaction
@@ -57,12 +60,25 @@ public class LevelSelectorActivity extends AppCompatActivity implements MenuFrag
         ft.commit();
     }
 
-    //TODO - so there is never an unselected Item
-    public void setDefaultSelected(){
-        //get the gridView adapter
-
+    @Override
+    public void onStart(){
+        super.onStart();
+        this.selectMap(0);
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        this.selectMap(0);
+    }
+
+    private void selectMap(int position){
+        gridview.requestFocusFromTouch();
+        gridview.setSelection(position);
+        ArrayAdapter myAdapter = (ArrayAdapter)gridview.getAdapter();
+        this.selectedKey = myAdapter.getItem(this.selectedPos).toString();
+        this.selectedPos = position;
+    }
 
     public String getMapKey() {
         if(this.selectedKey == null){
@@ -72,10 +88,14 @@ public class LevelSelectorActivity extends AppCompatActivity implements MenuFrag
     }
 
     public void deleteMap(){
+        //remove from persistan storage
         IFiler sharedPrefFiler = new SharedPreferencesFiler(this);
         sharedPrefFiler.removeData(this.selectedKey);
-        this.selectedKey = null;
+        //add here - change the thing in focus.
+        this.selectMap(0);
+        //remove textView from the gridview
+        ArrayAdapter myAdapter = (ArrayAdapter) gridview.getAdapter();
+        Object item = myAdapter.getItem(this.selectedPos);
+        myAdapter.remove(item);
     }
-
-
 }
