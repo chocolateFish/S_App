@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.user.mysokonabapplication.R;
 
@@ -28,19 +29,20 @@ public class LevelSelectorActivity extends AppCompatActivity implements MenuFrag
    // IFiler sharedPrefFiler;
    List<String> allKeys;
 
-    //TODO fix bug - what if no item is selected?
+    //TODO fix auto select on load.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Create filer
         IFiler sharedPrefFiler = new SharedPreferencesFiler(this);
-        //make sure there is always at least one Maze in preferences
+        //make sure there is at least one value in shared preferences
         if(!sharedPrefFiler.containsData()){
-            sharedPrefFiler.exportMap("#######\n#.....#\n#--.--#\n#$-@$-#\n#.$$$.#\n#-----#\n#######\n","01 Maze");
+            sharedPrefFiler.exportMap("#######\n#.....#\n#--.--#\n#$-@$-#\n#.$$$.#\n#-----#\n#######\n", "01 Maze");
         }
-
+        //populate list
         allKeys = sharedPrefFiler.loadAll();
+        //draw the view
         setContentView(R.layout.activity_level_selector);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 R.layout.map_item, allKeys);
@@ -48,54 +50,64 @@ public class LevelSelectorActivity extends AppCompatActivity implements MenuFrag
         gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(adapter);
         gridview.setOnItemClickListener(new OnItemClickListener() {
-
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                LevelSelectorActivity.this.selectMap(position);}
+                LevelSelectorActivity.this.selectedPos = position;
+                LevelSelectorActivity.this.selectedKey = ((TextView) v).getText().toString();
+                gridview.requestFocusFromTouch();
+                gridview.setSelection(position);
+            }
         });
+        //select item at first position
+        this.selectMap(gridview.getFirstVisiblePosition());
 
         // Begin the transaction
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.add(R.id.menu_container, MenuFragment.newInstance(true, false, true, true, true));
+        ft.add(R.id.menu_container, MenuFragment.newInstance(true));
         ft.commit();
     }
 
     @Override
     public void onStart(){
         super.onStart();
-        this.selectMap(0);
     }
 
     @Override
     public void onResume(){
         super.onResume();
-        this.selectMap(0);
+        this.selectMap(gridview.getFirstVisiblePosition());
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
     }
 
     private void selectMap(int position){
-        gridview.requestFocusFromTouch();
-        gridview.setSelection(position);
+        this.selectedPos = position;
         ArrayAdapter myAdapter = (ArrayAdapter)gridview.getAdapter();
         this.selectedKey = myAdapter.getItem(this.selectedPos).toString();
-        this.selectedPos = position;
+        gridview.requestFocusFromTouch();
+        gridview.setSelection(position);
+
     }
 
     public String getMapKey() {
         if(this.selectedKey == null){
-            //inform the user they need to select a key
+            //TODO
+
         }
         return this.selectedKey;
     }
 
     public void deleteMap(){
-        //remove from persistan storage
+        //remove from persistant storage
         IFiler sharedPrefFiler = new SharedPreferencesFiler(this);
         sharedPrefFiler.removeData(this.selectedKey);
-        //add here - change the thing in focus.
-        this.selectMap(0);
+
         //remove textView from the gridview
-        ArrayAdapter myAdapter = (ArrayAdapter) gridview.getAdapter();
-        Object item = myAdapter.getItem(this.selectedPos);
-        myAdapter.remove(item);
+        ArrayAdapter<String> myAdapter = (ArrayAdapter)gridview.getAdapter();
+        myAdapter.remove(myAdapter.getItem(this.selectedPos));
+        this.selectMap(gridview.getFirstVisiblePosition());
     }
 }

@@ -25,40 +25,21 @@ public class MenuFragment extends Fragment implements Button.OnClickListener {
     public final static String EXTRA_MESSAGE = "SelectedLevelKey.MESSAGE";
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "designBtnVisible";
-    private static final String ARG_PARAM2 = "selectBtnVisible";
-    private static final String ARG_PARAM3 = "playBtnVisible";
-    private static final String ARG_PARAM4 = "editBtnVisible";
-    private static final String ARG_PARAM5 = "deleteBtnVisible";
-
-    private boolean designBtnVisible;
-    private boolean selectBtnVisible;
+    private static final String ARG_PARAM1 = "playBtnVisible";
     private boolean playBtnVisible;
-    private boolean editBtnVisible;
-    private boolean deleteBtnVisible;
-
     private OnMenuInteractionListener myListener;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param isDesignBtnVisible Parameter 1.
-     * @param isSelectBtnVisible Parameter 2..
-     * @param isPlayBtnVisible Parameter 3.
-     * @param isEditBtnVisible Parameter 4.
-     * @param isDeleteBtnVisible Parameter 5.
+     * @param isPlayBtnVisible Parameter 1.
      * @return A new instance of fragment MenuFragment.
      */
-    public static MenuFragment newInstance(Boolean isDesignBtnVisible, Boolean isSelectBtnVisible,
-                                           Boolean isPlayBtnVisible, Boolean isEditBtnVisible,
-                                           Boolean isDeleteBtnVisible) {
+    public static MenuFragment newInstance( Boolean isPlayBtnVisible) {
         MenuFragment fragment = new MenuFragment();
         Bundle args = new Bundle();
-        args.putBoolean(ARG_PARAM1, isDesignBtnVisible);
-        args.putBoolean(ARG_PARAM2, isSelectBtnVisible);
-        args.putBoolean(ARG_PARAM3, isPlayBtnVisible);
-        args.putBoolean(ARG_PARAM4, isEditBtnVisible);
-        args.putBoolean(ARG_PARAM5, isDeleteBtnVisible);
+        args.putBoolean(ARG_PARAM1, isPlayBtnVisible);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -71,11 +52,8 @@ public class MenuFragment extends Fragment implements Button.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            designBtnVisible = getArguments().getBoolean(ARG_PARAM1);
-            selectBtnVisible = getArguments().getBoolean(ARG_PARAM2);
-            playBtnVisible = getArguments().getBoolean(ARG_PARAM3);
-            editBtnVisible = getArguments().getBoolean(ARG_PARAM4);
-            deleteBtnVisible = getArguments().getBoolean(ARG_PARAM5);
+            playBtnVisible = getArguments().getBoolean(ARG_PARAM1);
+
         }
     }
 
@@ -86,31 +64,20 @@ public class MenuFragment extends Fragment implements Button.OnClickListener {
         View rootView = inflater.inflate(R.layout.fragment_menu, container, false);
         //Hide /show buttons based on parameters - not sure if this is the robust way of doing this
         //setOnclick listners
-        if (designBtnVisible) {
-            Button levelBuilderBtn = (Button) rootView.findViewById(R.id.levelBuilderBtn);
-            levelBuilderBtn.setVisibility(View.VISIBLE);
-            levelBuilderBtn.setOnClickListener(this);
-        }
-        if (selectBtnVisible) {
-            Button levelSelectorBtn = (Button) rootView.findViewById(R.id.levelSelectorBtn);
-            levelSelectorBtn.setVisibility(View.VISIBLE);
-            levelSelectorBtn.setOnClickListener(this);
-        }
+
+        Button levelBuilderBtn = (Button) rootView.findViewById(R.id.levelBuilderBtn);
+        levelBuilderBtn.setOnClickListener(this);
+
+        Button editBtn = (Button) rootView.findViewById(R.id.editBtn);
+        editBtn.setOnClickListener(this);
+
+        Button deleteBtn = (Button) rootView.findViewById(R.id.deleteBtn);
+        deleteBtn.setOnClickListener(this);
 
         if (playBtnVisible) {
             Button playBtn = (Button) rootView.findViewById(R.id.playBtn);
             playBtn.setVisibility(View.VISIBLE);
             playBtn.setOnClickListener(this);
-        }
-        if (editBtnVisible) {
-            Button editBtn = (Button) rootView.findViewById(R.id.editBtn);
-            editBtn.setVisibility(View.VISIBLE);
-            editBtn.setOnClickListener(this);
-        }
-        if (deleteBtnVisible) {
-            Button deleteBtn = (Button) rootView.findViewById(R.id.deleteBtn);
-            deleteBtn.setVisibility(View.VISIBLE);
-            deleteBtn.setOnClickListener(this);
         }
 
         return rootView;
@@ -139,10 +106,7 @@ public class MenuFragment extends Fragment implements Button.OnClickListener {
                 Intent builderIntent = new Intent(this.getActivity(), LevelBuilderActivity.class);
                 startActivity(builderIntent);
                 break;
-            case R.id.levelSelectorBtn: default:
-                Intent selectorIntent = new Intent(this.getActivity(), LevelSelectorActivity.class);
-                startActivity(selectorIntent);
-                break;
+
             case R.id.playBtn:
                 Intent playIntent = new Intent(this.getActivity(), GameActivity.class);
                 playIntent.putExtra(EXTRA_MESSAGE, selectedKey);
@@ -155,6 +119,10 @@ public class MenuFragment extends Fragment implements Button.OnClickListener {
                 break;
             case R.id.deleteBtn:
                 myListener.deleteMap();
+
+            default:
+                Intent selectorIntent = new Intent(this.getActivity(), LevelSelectorActivity.class);
+                startActivity(selectorIntent);
                 break;
         }
     }
