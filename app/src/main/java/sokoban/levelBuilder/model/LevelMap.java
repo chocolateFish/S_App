@@ -119,6 +119,7 @@ public class LevelMap implements ILevelMap {
 
 
     @Override
+    //
     public void setSize(int cols, int rows) {
         // Recreate a new map of the specified size
         // x and y indices are 0-based so go from 0 to rows,cols -1

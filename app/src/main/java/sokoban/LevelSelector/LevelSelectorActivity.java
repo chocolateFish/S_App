@@ -58,8 +58,8 @@ public class LevelSelectorActivity extends AppCompatActivity implements MenuFrag
                 gridview.setSelection(position);
             }
         });
-        //select item at first position
-        this.selectMap(gridview.getFirstVisiblePosition());
+
+        this.selectMap(0);
 
         // Begin the transaction
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -94,8 +94,7 @@ public class LevelSelectorActivity extends AppCompatActivity implements MenuFrag
 
     public String getMapKey() {
         if(this.selectedKey == null){
-            //TODO
-
+            //
         }
         return this.selectedKey;
     }
@@ -108,6 +107,6 @@ public class LevelSelectorActivity extends AppCompatActivity implements MenuFrag
         //remove textView from the gridview
         ArrayAdapter<String> myAdapter = (ArrayAdapter)gridview.getAdapter();
         myAdapter.remove(myAdapter.getItem(this.selectedPos));
-        this.selectMap(gridview.getFirstVisiblePosition());
+        this.selectMap(0);
     }
 }

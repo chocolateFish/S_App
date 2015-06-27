@@ -6,6 +6,73 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="sokoban.levelBuilder.view.LevelBuilderActivity">
 
+    <!--<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:paddingLeft="10dp"
+        android:id="@+id/widthLabel"
+        android:text="Width :"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/widthInput"
+        android:layout_toEndOf="@+id/widthLabel"
+        android:layout_toRightOf="@+id/widthLabel"
+        android:minEms="1"
+        android:maxEms="2"
+        android:background="@android:color/background_light"
+        android:inputType="number"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp" />
+    <requestFocus />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/widthInput"
+        android:layout_toRightOf="@+id/widthInput"
+        android:id="@+id/heightLabel"
+        android:text="Height :"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/heightInput"
+        android:background="@android:color/background_light"
+        android:minEms="1"
+        android:maxEms="2"
+        android:inputType="number"
+        android:layout_toEndOf="@+id/heightLabel"
+        android:layout_toRightOf="@+id/heightLabel"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+    />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Build Empty Map"
+        android:id="@+id/buildMapBtn"
+        android:padding="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/heightInput"
+        android:layout_marginLeft="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:outlineProvider="paddedBounds"
+        android:background="@color/button_material_light"
+        android:singleLine="false"
+        android:layout_alignRight="@+id/saveAsInput"
+        android:layout_alignEnd="@+id/saveAsInput" /> -->
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,26 +94,23 @@
         android:layout_marginBottom="30dp"
    />
 
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/saveLevelInput"
+        android:id="@+id/levelInput"
         android:layout_below="@+id/checkKeyBtn"
         android:layout_marginBottom="30dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:singleLine="false"
         android:background="@android:color/background_light"
-        android:hint="Enter Level as a string" />
+
+        />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/saveLevelBtn"
         android:id="@+id/saveLevelBtn"
-        android:layout_below="@+id/saveLevelInput"
+        android:layout_below="@+id/levelInput"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="60dp"
         android:layout_marginTop="30dp"
