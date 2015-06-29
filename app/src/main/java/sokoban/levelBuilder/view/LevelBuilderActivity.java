@@ -122,8 +122,6 @@ public class LevelBuilderActivity extends AppCompatActivity{
     @Override
     protected void onStop() {
         super.onStop();  // Always call the superclass method first
-
-
     }
 
     @Override

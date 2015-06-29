@@ -1,7 +1,7 @@
 package sokoban.game.GameView;
 
 /**
- * Created by User on 18/05/2015.
+ *code from stackOverflow
  */
 public interface SwipeInterface {
 
@@ -12,6 +12,5 @@ public interface SwipeInterface {
     void rightToLeft();
 
     void topToBottom();
-    void tooShortSwipe(CharSequence text);
 
 }

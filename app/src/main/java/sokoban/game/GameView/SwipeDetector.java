@@ -55,7 +55,6 @@ public class SwipeDetector implements View.OnTouchListener{
                     if(deltaX > 0) { this.onRightToLeftSwipe(); return true; }
                 }
                 else {
-                   controller.tooShortSwipe("Swipe needs to be longer!");
                     Log.i(logTag, "Swipe was only " + Math.abs(deltaX) + " long, need at least " + MIN_DISTANCE);
 
                 }
@@ -67,11 +66,8 @@ public class SwipeDetector implements View.OnTouchListener{
                     if(deltaY > 0) { this.onBottomToTopSwipe(); return true; }
                 }
                 else {
-                    controller.tooShortSwipe("Swipe needs to be longer!");
                     Log.i(logTag, "Swipe was only " + Math.abs(deltaX) + " long, need at least " + MIN_DISTANCE);
                     v.performClick();
-
-
                 }
             }
         }

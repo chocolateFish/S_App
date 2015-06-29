@@ -59,13 +59,6 @@ public class GameController implements SwipeInterface, GetMazeInfoCallback, HasM
 
     public void bottomToTop(){
         this.myModel.playTurn(Directions.UP);
-        //int manAcross = this.person.getAcross();
-       // int manDown = this.person.getDown();
-       // this.myView.setManPos(manAcross, manDown);
-    }
-
-    public void tooShortSwipe(CharSequence text){
-        this.myView.doSwipeToast(text);
     }
 
     //TODO

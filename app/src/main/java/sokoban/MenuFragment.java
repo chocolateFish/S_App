@@ -118,7 +118,7 @@ public class MenuFragment extends Fragment implements Button.OnClickListener {
                 startActivity(editIntent);
                 break;
             case R.id.deleteBtn:
-                myListener.deleteMap();
+                myListener.onClickDelete();
 
             default:
                 Intent selectorIntent = new Intent(this.getActivity(), LevelSelectorActivity.class);
@@ -131,6 +131,6 @@ public class MenuFragment extends Fragment implements Button.OnClickListener {
     // Container Activity must implement this interface
     public interface OnMenuInteractionListener {
        String getMapKey();
-        void deleteMap();
+        void onClickDelete();
     }
 }

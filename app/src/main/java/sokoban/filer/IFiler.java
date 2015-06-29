@@ -24,5 +24,6 @@ public interface IFiler {
     boolean containsData();
     void removeData(String key);
 
+
 }
 

@@ -22,7 +22,6 @@ public class MazeView extends View {
     private int mazeTop;
     private int mazeLeft;
     private GetMazeInfoCallback callback;
-    private Toast swipeToast;
 
     public MazeView(Context context) {
         super(context);
@@ -37,9 +36,6 @@ public class MazeView extends View {
         this.register(callback);
         this.setAcrossAndDown(callback);
         this.drawingSetup();
-        int duration = Toast.LENGTH_SHORT;
-        CharSequence text = "toastText";
-        swipeToast = Toast.makeText(context, text, duration);
     }
 
     private  void drawingSetup(){
@@ -71,45 +67,6 @@ public class MazeView extends View {
         this.setMazeBounds(width, height);
         drawMaze(canvas);
     }
-/*
-    // This example shows an Activity, but you would use the same approach if
-// you were subclassing a View.
-    @Override
-    public boolean onTouchEvent(MotionEvent event){
-        int action = event.getActionMasked();
-        CharSequence text = "Hello toast!";
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context,text, duration);
-
-        switch(action) {
-            case (MotionEvent.ACTION_DOWN) :
-                CharSequence downText = "Action was DOWN";
-                toast.setText(downText);
-                toast.show();
-                return true;
-            case (MotionEvent.ACTION_MOVE) :
-                CharSequence moveText = "Action was MOVE";
-                toast.setText(moveText);
-                return true;
-            case (MotionEvent.ACTION_UP) :
-                CharSequence upText = "Action was UP";
-                toast.setText(upText);
-                toast.show();
-                return true;
-            case (MotionEvent.ACTION_CANCEL) :
-                // Log.d(DEBUG_TAG,"Action was CANCEL");
-                return true;
-            case (MotionEvent.ACTION_OUTSIDE) :
-                // Log.d(DEBUG_TAG,"Movement occurred outside bounds " +
-                //        "of current screen element");
-                return true;
-            default :
-                return super.onTouchEvent(event);
-        }
-    }
-
-*/
-    //Calculations based on canvas size
 
     private int calcPercentageOfValue(int percentage, int value){
         float ans = (percentage * value)/100;
@@ -282,11 +239,6 @@ public class MazeView extends View {
         int rectBottom = top + this.blockLength - margin;
         int rectRight = left + this.blockLength - margin;
         canvas.drawRect(rectLeft, rectTop, rectRight, rectBottom, fillPaint);
-    }
-
-    public void doSwipeToast(CharSequence text){
-        swipeToast.setText(text);
-        swipeToast.show();
     }
 
 }

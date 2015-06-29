@@ -11,19 +11,28 @@ import java.util.Set;
 
 
 public class SharedPreferencesFiler extends FileHandler {
+
     private static SharedPreferences sharedPref;
     private static final String PREFERENCE_NAME = "AllMazes";
+    private static final String DEFAULT_MAP = "#######\n#.....#\n#--.--#\n#$-@$-#\n#.$$$.#\n#-----#\n#######\n";
+    private static final String DEFAULT_KEY = "01 Maze";
 
     public SharedPreferencesFiler(Context mContext){
         super();
         sharedPref = mContext.getSharedPreferences(
                 SharedPreferencesFiler.PREFERENCE_NAME, Context.MODE_PRIVATE);
+        this.loadDefault();
+    }
+
+    private void loadDefault(){
+        if (!this.containsData()){
+            this.exportMap(SharedPreferencesFiler.DEFAULT_MAP, SharedPreferencesFiler.DEFAULT_KEY);
+        }
     }
 
     @Override
       public String importMap(String key) {
-        String defaultMaze = "#######\n#.....#\n#--.--#\n#$-@$-#\n#.$$$.#\n#-----#\n#######\n";
-        String zippedStr = sharedPref.getString(key, defaultMaze);
+        String zippedStr = sharedPref.getString(key, SharedPreferencesFiler.DEFAULT_MAP);
         return this.unZip(zippedStr);
     }
 
@@ -58,7 +67,8 @@ public class SharedPreferencesFiler extends FileHandler {
     public void removeData(String key){
         SharedPreferences.Editor editor  = sharedPref.edit();
         editor.remove(key);
-        editor.apply();
+        editor.commit();
+        this.loadDefault();
     }
 
 

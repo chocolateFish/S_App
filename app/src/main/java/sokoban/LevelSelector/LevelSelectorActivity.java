@@ -1,18 +1,17 @@
 package sokoban.LevelSelector;
 
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckedTextView;
 import android.widget.GridView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.user.mysokonabapplication.R;
 
 import java.util.List;
@@ -25,9 +24,7 @@ public class LevelSelectorActivity extends AppCompatActivity implements MenuFrag
     public final static String EXTRA_MESSAGE = "SelectedLevelKey.MESSAGE";
     private GridView gridview;
     private String selectedKey;
-    private int selectedPos;
-   // IFiler sharedPrefFiler;
-   List<String> allKeys;
+    private IFiler sharedPrefFiler;
 
     //TODO fix auto select on load.
 
@@ -35,31 +32,34 @@ public class LevelSelectorActivity extends AppCompatActivity implements MenuFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Create filer
-        IFiler sharedPrefFiler = new SharedPreferencesFiler(this);
+        sharedPrefFiler = new SharedPreferencesFiler(this);
+
         //make sure there is at least one value in shared preferences
         if(!sharedPrefFiler.containsData()){
             sharedPrefFiler.exportMap("#######\n#.....#\n#--.--#\n#$-@$-#\n#.$$$.#\n#-----#\n#######\n", "01 Maze");
         }
+
         //populate list
-        allKeys = sharedPrefFiler.loadAll();
+        List<String> allKeys;allKeys = sharedPrefFiler.loadAll();
         //draw the view
         setContentView(R.layout.activity_level_selector);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                R.layout.map_item, allKeys);
+                R.layout.map_item_checkable, allKeys);
         adapter.sort(String.CASE_INSENSITIVE_ORDER);
         gridview = (GridView) findViewById(R.id.gridview);
+
         gridview.setAdapter(adapter);
+        gridview.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         gridview.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                LevelSelectorActivity.this.selectedPos = position;
-                LevelSelectorActivity.this.selectedKey = ((TextView) v).getText().toString();
-                gridview.requestFocusFromTouch();
-                gridview.setSelection(position);
+                LevelSelectorActivity.this.selectedKey = ((CheckedTextView) v).getText().toString();
+                gridview.setItemChecked(position, true);
+
+                //gridview.requestFocusFromTouch();
+                //gridview.setSelection(position);
             }
         });
-
-        this.selectMap(0);
 
         // Begin the transaction
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -70,12 +70,13 @@ public class LevelSelectorActivity extends AppCompatActivity implements MenuFrag
     @Override
     public void onStart(){
         super.onStart();
+        this.selectMap(0);
     }
 
     @Override
     public void onResume(){
         super.onResume();
-        this.selectMap(gridview.getFirstVisiblePosition());
+        this.selectMap(0);
     }
 
     @Override
@@ -83,30 +84,25 @@ public class LevelSelectorActivity extends AppCompatActivity implements MenuFrag
         super.onStop();
     }
 
-    private void selectMap(int position){
-        this.selectedPos = position;
+    private void selectMap(final int position){
         ArrayAdapter myAdapter = (ArrayAdapter)gridview.getAdapter();
-        this.selectedKey = myAdapter.getItem(this.selectedPos).toString();
-        gridview.requestFocusFromTouch();
-        gridview.setSelection(position);
-
+        this.selectedKey = myAdapter.getItem(position).toString();
+        gridview.setItemChecked(position, true);
+       // gridview.requestFocusFromTouch();
+        //gridview.setSelection(position);
     }
 
     public String getMapKey() {
-        if(this.selectedKey == null){
-            //
-        }
         return this.selectedKey;
     }
 
-    public void deleteMap(){
+    public void onClickDelete(){
         //remove from persistant storage
-        IFiler sharedPrefFiler = new SharedPreferencesFiler(this);
+        sharedPrefFiler = new SharedPreferencesFiler(this);
         sharedPrefFiler.removeData(this.selectedKey);
 
-        //remove textView from the gridview
-        ArrayAdapter<String> myAdapter = (ArrayAdapter)gridview.getAdapter();
-        myAdapter.remove(myAdapter.getItem(this.selectedPos));
+        //update Array Adapter
+        ((ArrayAdapter) gridview.getAdapter()).notifyDataSetChanged();
         this.selectMap(0);
     }
 }
