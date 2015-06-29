@@ -28,9 +28,15 @@ public class GameController implements SwipeInterface, GetMazeInfoCallback, HasM
         this.myView.invalidate();
         this.myView.register(this);
     }
-
+    public void setMyModel(String mazeStr){
+        this.myModel= new Maze(mazeStr, this);
+    }
     public void setView(MazeView myView) {
         this.myView = myView;
+    }
+
+    public String getMazeString(){
+        return this.myModel.toString();
     }
 
     public BlockTypes  getBlockType(int across, int down){

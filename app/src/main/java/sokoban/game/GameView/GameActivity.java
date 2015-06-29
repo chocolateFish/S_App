@@ -3,6 +3,7 @@ package sokoban.game.GameView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -12,16 +13,18 @@ import sokoban.filer.SharedPreferencesFiler;
 import sokoban.game.GameController;
 
 
-//import android.view.Menu;
-//import android.view.MenuItem;
+
 //import android.widget.TextView;
 
 //import com.example.user.mysokonabapplication.R;
 
 
 public class GameActivity extends AppCompatActivity {
-        MazeView myMaze;
-        GameController myController;
+    private static final String MY_PREFERENCE_NAME = "CurrentMaze";
+        private MazeView myMaze;
+        private GameController myController;
+        private String myMazeStr;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,32 @@ public class GameActivity extends AppCompatActivity {
 
         SwipeDetector swipeDetector = new SwipeDetector(myController);
         myMaze.setOnTouchListener(swipeDetector);
+    }
+
+    @Override
+    public void onPause(){
+        //save the maze as a string - this would be more complicated if the model
+        //included player info or stuff like that
+        SharedPreferences.Editor editor  = this.getSharedPreferences(
+                GameActivity.MY_PREFERENCE_NAME, Context.MODE_PRIVATE).edit();
+        String myMazeStr = myController.getMazeString();
+        editor.putString("GameActivity",myMazeStr);
+        editor.apply();
+        this.myMaze = null;
+        super.onPause();
+
+    }
+
+    @Override
+    public void onResume(){
+        //set the current view
+        SharedPreferences myPref  = this.getSharedPreferences(
+                GameActivity.MY_PREFERENCE_NAME, Context.MODE_PRIVATE);
+        //second value is a default map
+        String myMaze =  myPref.getString("GameActivity", "#######\n#.....#\n#--.--#\n#$-@$-#\n#.$$$.#\n#-----#\n#######\n");
+        myController.setMyModel(myMaze);
+        super.onResume();
+
     }
 
 }

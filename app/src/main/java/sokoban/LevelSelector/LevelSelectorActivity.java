@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.GridView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TextView;
 import com.example.user.mysokonabapplication.R;
 
 import java.util.List;
@@ -24,9 +23,8 @@ public class LevelSelectorActivity extends AppCompatActivity implements MenuFrag
     public final static String EXTRA_MESSAGE = "SelectedLevelKey.MESSAGE";
     private GridView gridview;
     private String selectedKey;
-    private IFiler sharedPrefFiler;
+    private IFiler sharedPrefFiler ;
 
-    //TODO fix auto select on load.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +53,6 @@ public class LevelSelectorActivity extends AppCompatActivity implements MenuFrag
                                     int position, long id) {
                 LevelSelectorActivity.this.selectedKey = ((CheckedTextView) v).getText().toString();
                 gridview.setItemChecked(position, true);
-
-                //gridview.requestFocusFromTouch();
-                //gridview.setSelection(position);
             }
         });
 
@@ -88,8 +83,6 @@ public class LevelSelectorActivity extends AppCompatActivity implements MenuFrag
         ArrayAdapter myAdapter = (ArrayAdapter)gridview.getAdapter();
         this.selectedKey = myAdapter.getItem(position).toString();
         gridview.setItemChecked(position, true);
-       // gridview.requestFocusFromTouch();
-        //gridview.setSelection(position);
     }
 
     public String getMapKey() {
