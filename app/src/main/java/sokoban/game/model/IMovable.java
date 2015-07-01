@@ -10,7 +10,6 @@ public interface IMovable {
 
 	boolean move(Directions direction);
 
-	//unnecessary??
-	//IPosition getPostion();
+	IPosition getPostion();
 
 }

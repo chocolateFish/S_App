@@ -29,7 +29,7 @@ public class Maze implements IMaze {
 	}
 
 	public void updatePositions(String currentMaze){
-		//TODO detach man from his old position
+		this.allPositions.clear();
 		this.addAllPositions(currentMaze);
 	}
 

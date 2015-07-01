@@ -74,7 +74,7 @@ public class GameActivity extends AppCompatActivity {
 
         // Restore state members from saved instance
        String myMaze = savedInstanceState.getString(STATE_MAZE);
-       // myController.updatePositions(myMaze);
+        myController.updatePositions(myMaze);
     }
 
 }
