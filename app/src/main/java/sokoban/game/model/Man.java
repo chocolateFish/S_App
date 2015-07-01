@@ -3,12 +3,10 @@ package sokoban.game.model;
 import sokoban.Directions;
 
 public class Man extends Movable implements IMovable {
-
 	Man() {
 		super();
 		this.isBlank = false;
 	}
-
 	@Override
 	public String toString() {
 		String symbol = "@";
@@ -17,7 +15,6 @@ public class Man extends Movable implements IMovable {
 		}
 		return symbol;
 	}
-    //TODO implement this better
 	@Override
 	public boolean move(Directions direction) {
         boolean hasMoved = false;

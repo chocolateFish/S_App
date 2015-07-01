@@ -1,21 +1,14 @@
 package sokoban.filer;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-
-import sokoban.filer.IFiler;
 
 /**
- * Code by Filer Model group
+ * Zip and unzip Code by Filer Model group-
+ * import and export functions + new functions  are left abstract,
+ * for different implementations based on persistent storge
  *
  */
-public abstract class FileHandler implements IFiler{
 
+public abstract class AbstractFiler {
     public String zip(String map) {
         String zipMap = "";
         int count = 1;
@@ -46,7 +39,6 @@ public abstract class FileHandler implements IFiler{
 
         return zipMap;
     }
-
     public String unZip(String zippedMap) {
         String outputMap = "";
         String tempQty = "";
@@ -85,34 +77,10 @@ public abstract class FileHandler implements IFiler{
         }
         return outputMap;
     }
-/*
-    public String importMap(String filePath) throws IOException {
-        String outputMap = "";
-        *//*
-        // read the file at the provided path
-        //try (Scanner scan =  new Scanner( new File(filePath) )) {
-         Scanner scan =  new Scanner( new File(filePath) );
-            // this assumes that there is only 1 string in the file
-            outputMap = scan.useDelimiter("\\Z").next();
-            scan.close();
-        //}
-         return outputMap;
-    }
-*/
-   /* public void exportMap(String map, String fileName) throws IOException {
-       BufferedWriter writer = new BufferedWriter ( new FileWriter(fileName) );
-       //try (BufferedWriter  writer = new BufferedWriter ( new FileWriter(fileName) )) {
-            writer.write(map);
-            writer.close();
-       // }
-    }
-    */
-
     public abstract String importMap(String key);
     public abstract void exportMap(String map, String key);
-    public abstract List<String> loadAll();
+    public abstract List<String> loadAllKeys();
     public abstract String getKeyAvailability(String key);
     public abstract boolean containsData();
     public abstract void removeData(String key);
-
 }

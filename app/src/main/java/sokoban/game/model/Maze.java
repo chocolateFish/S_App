@@ -28,6 +28,11 @@ public class Maze implements IMaze {
 		this.addAllPositions(mazeStr);
 	}
 
+	public void updatePositions(String currentMaze){
+		//TODO detach man from his old position
+		this.addAllPositions(currentMaze);
+	}
+
 	private void set(int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -167,7 +172,6 @@ public class Maze implements IMaze {
         if (hasMoved) {
             this.hasMovedCallback.hasMoved();
         }
-
 	}
 
 	public int getHeight() {

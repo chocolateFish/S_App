@@ -39,6 +39,10 @@ public class GameController implements SwipeInterface, GetMazeInfoCallback, HasM
         return this.myModel.toString();
     }
 
+    public void updatePositions(String currentMaze){
+        this.myModel.updatePositions(currentMaze);
+    }
+
     public BlockTypes  getBlockType(int across, int down){
        return this.myModel.whoIsAt(across, down);
     }
@@ -71,5 +75,6 @@ public class GameController implements SwipeInterface, GetMazeInfoCallback, HasM
     public void hasMoved(){
         this.myView.invalidate();
     }
+
 
 }

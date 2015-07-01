@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Toast;
 
@@ -23,8 +24,8 @@ public class MazeView extends View {
     private int mazeLeft;
     private GetMazeInfoCallback callback;
 
-    public MazeView(Context context) {
-        super(context);
+    public MazeView(Context context, AttributeSet attrs) {
+        super(context, attrs);
         this.across = 5;
         this.down = 5;
         this.minMargin = 10;
@@ -49,14 +50,16 @@ public class MazeView extends View {
 
     }
 
-    private void setAcrossAndDown(GetMazeInfoCallback callback) {
+    public void register(GetMazeInfoCallback callback){
+        this.callback = callback;
+    }
+
+      private void setAcrossAndDown(GetMazeInfoCallback callback) {
         this.across = callback.getMazeWidth();
         this.down = callback.getMazeHeight();
     }
 
-    public void register(GetMazeInfoCallback callback){
-        this.callback = callback;
-    }
+
 
     @Override
     public void onDraw(Canvas canvas) {
@@ -108,7 +111,7 @@ public class MazeView extends View {
 
     //end of calculations based on canvas size
 
-    protected void drawMaze(Canvas canvas){
+        protected void drawMaze(Canvas canvas){
         int left;
         int top = this.mazeTop;
         // draw a column

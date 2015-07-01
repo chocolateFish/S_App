@@ -6,10 +6,6 @@ package sokoban.levelBuilder.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.InputFilter;
-import android.text.Spanned;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,17 +14,15 @@ import android.widget.Toast;
 import com.example.user.mysokonabapplication.R;
 
 import sokoban.LevelSelector.LevelSelectorActivity;
-import sokoban.filer.IFiler;
+import sokoban.filer.AbstractFiler;
 import sokoban.filer.SharedPreferencesFiler;
 import sokoban.levelBuilder.LevelBuilderController;
-import sokoban.levelBuilder.model.ILevelMap;
-import sokoban.levelBuilder.model.LevelMap;
 
 
 public class LevelBuilderActivity extends AppCompatActivity{
     public final static String EXTRA_MESSAGE = "SelectedLevelKey.MESSAGE";
 
-    private IFiler sharedPrefFiler;
+    private AbstractFiler myFiler;
     LevelBuilderController myController;
     //private ILevelMap myMap;
 
@@ -41,13 +35,13 @@ public class LevelBuilderActivity extends AppCompatActivity{
         //this.myMap = new LevelMap();
 
         //Create filer
-        this.sharedPrefFiler = new SharedPreferencesFiler(this);
+        this.myFiler = new SharedPreferencesFiler(this);
 
       //change this to get the height and width of the maze.
         Intent intent = getIntent();
         String key = intent.getStringExtra(LevelSelectorActivity.EXTRA_MESSAGE);
         if (key != null) {
-            String maze = this.sharedPrefFiler.importMap(key);
+            String maze = this.myFiler.importMap(key);
             EditText saveAsInput= (EditText) findViewById(R.id.saveAsInput);
             EditText levelInput = (EditText) findViewById(R.id.levelInput);
             saveAsInput.setText(key);
@@ -82,7 +76,7 @@ public class LevelBuilderActivity extends AppCompatActivity{
                 EditText saveAsInput= (EditText) findViewById(R.id.saveAsInput);
                 String key = saveAsInput.getText().toString();
 
-                CharSequence msgString = LevelBuilderActivity.this.sharedPrefFiler.getKeyAvailability(key);
+                CharSequence msgString = LevelBuilderActivity.this.myFiler.getKeyAvailability(key);
 
                 Toast toast = Toast.makeText(LevelBuilderActivity.this, msgString, Toast.LENGTH_LONG);
                 toast.show();
@@ -143,7 +137,7 @@ public class LevelBuilderActivity extends AppCompatActivity{
 
         //then get the string back out
         String maze = this.myController.levelToString();
-        this.sharedPrefFiler.exportMap(maze, key);
+        this.myFiler.exportMap(maze, key);
 
 
         Intent intent = new Intent(this, LevelSelectorActivity.class);

@@ -14,26 +14,6 @@ public class SwipeDetector implements View.OnTouchListener{
         this.controller = controller;
     }
 
-    public void onRightToLeftSwipe(){
-        Log.i(logTag, "RightToLeftSwipe!");
-        controller.rightToLeft();
-    }
-
-    public void onLeftToRightSwipe(){
-        Log.i(logTag, "LeftToRightSwipe!");
-        controller.leftToRight();
-    }
-
-    public void onTopToBottomSwipe(){
-        Log.i(logTag, "onTopToBottomSwipe!");
-        controller.topToBottom();
-    }
-
-    public void onBottomToTopSwipe(){
-        Log.i(logTag, "onBottomToTopSwipe!");
-        controller.bottomToTop();
-    }
-
     public boolean onTouch(View v, MotionEvent event) {
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN: {
@@ -72,6 +52,23 @@ public class SwipeDetector implements View.OnTouchListener{
             }
         }
         return false;
+    }
+
+    public void onRightToLeftSwipe(){
+        Log.i(logTag, "RightToLeftSwipe!");
+        controller.rightToLeft();
+    }
+    public void onLeftToRightSwipe(){
+        Log.i(logTag, "LeftToRightSwipe!");
+        controller.leftToRight();
+    }
+    public void onTopToBottomSwipe(){
+        Log.i(logTag, "onTopToBottomSwipe!");
+        controller.topToBottom();
+    }
+    public void onBottomToTopSwipe(){
+        Log.i(logTag, "onBottomToTopSwipe!");
+        controller.bottomToTop();
     }
 }
 

@@ -16,6 +16,7 @@ import sokoban.game.GameView.GameActivity;
 import sokoban.levelBuilder.view.LevelBuilderActivity;
 
 /**
+ * modified example rom Android training section on Fragments
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * Use the {@link MenuFragment#newInstance} factory method to
@@ -89,7 +90,8 @@ public class MenuFragment extends Fragment implements Button.OnClickListener {
         try {
             myListener = (OnMenuInteractionListener) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement OnArticleSelectedListener");
+            throw new ClassCastException(activity.toString() +
+                    " must implement OnArticleSelectedListener");
         }
     }
 
@@ -106,7 +108,6 @@ public class MenuFragment extends Fragment implements Button.OnClickListener {
                 Intent builderIntent = new Intent(this.getActivity(), LevelBuilderActivity.class);
                 startActivity(builderIntent);
                 break;
-
             case R.id.playBtn:
                 Intent playIntent = new Intent(this.getActivity(), GameActivity.class);
                 playIntent.putExtra(EXTRA_MESSAGE, selectedKey);
@@ -119,14 +120,12 @@ public class MenuFragment extends Fragment implements Button.OnClickListener {
                 break;
             case R.id.deleteBtn:
                 myListener.onClickDelete();
-
             default:
                 Intent selectorIntent = new Intent(this.getActivity(), LevelSelectorActivity.class);
                 startActivity(selectorIntent);
                 break;
         }
     }
-
 
     // Container Activity must implement this interface
     public interface OnMenuInteractionListener {

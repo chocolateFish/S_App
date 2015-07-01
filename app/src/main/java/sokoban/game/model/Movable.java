@@ -13,11 +13,7 @@ public abstract class Movable implements IMovable{
 	public void setPositon(IPosition destination) {
 		this.currentPosition = destination;
 	}
-
-	public boolean isBlank() {
-		return this.isBlank;
-	}
-
+	public boolean isBlank() {return this.isBlank; }
 	public abstract boolean move(Directions direction);
 
 	//unnecessary

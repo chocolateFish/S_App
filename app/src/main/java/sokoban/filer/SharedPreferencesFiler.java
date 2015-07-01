@@ -4,13 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 
-public class SharedPreferencesFiler extends FileHandler {
+public class SharedPreferencesFiler extends AbstractFiler {
 
     private static SharedPreferences sharedPref;
     private static final String PREFERENCE_NAME = "AllMazes";
@@ -45,9 +43,9 @@ public class SharedPreferencesFiler extends FileHandler {
         // editor.commit();
     }
 
-    public List<String> loadAll(){
+    public List<String> loadAllKeys(){
         Set<String> allKeysSet = sharedPref.getAll().keySet();
-        return new ArrayList<String>(allKeysSet);
+        return new ArrayList<>(allKeysSet);
     }
 
     public String getKeyAvailability(String key){
@@ -67,7 +65,7 @@ public class SharedPreferencesFiler extends FileHandler {
     public void removeData(String key){
         SharedPreferences.Editor editor  = sharedPref.edit();
         editor.remove(key);
-        editor.commit();
+        editor.apply();
         this.loadDefault();
     }
 

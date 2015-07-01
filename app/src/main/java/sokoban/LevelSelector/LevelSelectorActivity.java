@@ -15,7 +15,7 @@ import com.example.user.mysokonabapplication.R;
 
 import java.util.List;
 
-import sokoban.filer.IFiler;
+import sokoban.filer.AbstractFiler;
 import sokoban.filer.SharedPreferencesFiler;
 import sokoban.MenuFragment;
 
@@ -23,24 +23,23 @@ public class LevelSelectorActivity extends AppCompatActivity implements MenuFrag
     public final static String EXTRA_MESSAGE = "SelectedLevelKey.MESSAGE";
     private GridView gridview;
     private String selectedKey;
-    private IFiler sharedPrefFiler ;
+    private AbstractFiler myFiler;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Create filer
-        sharedPrefFiler = new SharedPreferencesFiler(this);
+        myFiler = new SharedPreferencesFiler(this);
 
         //make sure there is at least one value in shared preferences
-        if(!sharedPrefFiler.containsData()){
-            sharedPrefFiler.exportMap("#######\n#.....#\n#--.--#\n#$-@$-#\n#.$$$.#\n#-----#\n#######\n", "01 Maze");
+        if(!myFiler.containsData()){
+            myFiler.exportMap("#######\n#.....#\n#--.--#\n#$-@$-#\n#.$$$.#\n#-----#\n#######\n", "01 Maze");
         }
-
-        //populate list
-        List<String> allKeys;allKeys = sharedPrefFiler.loadAll();
         //draw the view
         setContentView(R.layout.activity_level_selector);
+        //populate list
+        List<String> allKeys;allKeys = myFiler.loadAllKeys();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 R.layout.map_item_checkable, allKeys);
         adapter.sort(String.CASE_INSENSITIVE_ORDER);
@@ -60,6 +59,7 @@ public class LevelSelectorActivity extends AppCompatActivity implements MenuFrag
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(R.id.menu_container, MenuFragment.newInstance(true));
         ft.commit();
+
     }
 
     @Override
@@ -91,9 +91,7 @@ public class LevelSelectorActivity extends AppCompatActivity implements MenuFrag
 
     public void onClickDelete(){
         //remove from persistant storage
-        sharedPrefFiler = new SharedPreferencesFiler(this);
-        sharedPrefFiler.removeData(this.selectedKey);
-
+        myFiler.removeData(this.selectedKey);
         //update Array Adapter
         ((ArrayAdapter) gridview.getAdapter()).notifyDataSetChanged();
         this.selectMap(0);
